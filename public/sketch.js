@@ -106,7 +106,7 @@ function draw() {
     fill(100);
     textSize(20);
     textFont('consolas');
-    text("Consumption: " + consumption, canvasWidth - canvasWidth / 5, 20)
+    text("Verbrauch: " + consumption, canvasWidth - canvasWidth / 5, 20)
 
     pop();
     distance.display();
