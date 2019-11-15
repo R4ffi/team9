@@ -26,7 +26,6 @@ function App() {
       </div>
       <div className="row">
         <div className="gameDiv">
-          <div id="game"></div>
           {isGameVisible && <div id="game"></div>}
         </div>
         

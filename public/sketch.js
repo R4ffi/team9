@@ -1,9 +1,9 @@
 var car;
 let carImage;
 let street;
-let canvasWidth = 800;
+let canvasWidth = height;
 let laneWidth = 60;
-let canvasHeight = 600;
+let canvasHeight = width;
 let maxFuel = 50;
 let fuel;
 let inventory;
