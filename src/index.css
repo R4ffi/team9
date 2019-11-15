@@ -11,3 +11,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.gameDiv {
+  display: inline-block;
+  background: #cfc;
+}
+
+.camDiv {
+  display: inline-block;
+  background: #ffc;
+}

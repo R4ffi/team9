@@ -10,20 +10,23 @@ class Street {
         this.y = 0;
 
         this.scrollSpeed = speed;
+        this.yOffset = Math.round(this.background.height * 0.5);
+        this.xOffset = this.canvasWidth / 2;
+        this.numberOfBackgroundImages = Math.round(this.canvasHeight / this.background.height) + 2;
     }
 
     display() {
-        const numberOfBackgroundImages = Math.round(this.canvasHeight / this.background.height) + 2;
-
-        for (let i = 0; i < numberOfBackgroundImages; i++) {
-            const yPos = this.y + ((i - 1) * this.background.height + (this.background.height * 0.5));
-            image(this.background, this.canvasWidth / 2, yPos);
+        console.log(`X: ${this.xOffset}, Y: ${this.y}`)
+        for (let i = 0; i < this.numberOfBackgroundImages; i++) {
+            const yPos = this.y + ((i - 1) * this.background.height + this.yOffset);
+            image(this.background, this.xOffset, yPos);
         }
+
+        this.y += this.scrollSpeed;
 
         if (this.y > this.background.height) {
             this.y = 0;
         }
 
-        this.y += this.scrollSpeed;
     }
 }
