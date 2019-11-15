@@ -4,7 +4,7 @@ let street;
 let canvasWidth = 800;
 let laneWidth = 60;
 let canvasHeight = 600;
-let maxFuel = 20;
+let maxFuel = 50;
 let fuel;
 let inventory;
 let particleAnimator;
