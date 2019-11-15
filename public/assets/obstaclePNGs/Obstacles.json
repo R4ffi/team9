@@ -1,0 +1,32 @@
+{
+  "beziehen":[
+    {
+      "name":"basisstrom",
+      "png":"assets/obstaclePNGs/beziehen/basisstrom.png"
+    }
+  ],
+  "cars":[
+    {
+      "name":"dodge",
+      "png":"assets/obstaclePNGs/cars/DodgeRam.png"
+    }
+  ],
+  "erzeugen":[
+    {
+      "name":"solar",
+      "png":"assets/obstaclePNGs/Erzeugen/Solarzelle.png"
+    }
+  ],
+    "home":[
+    {
+      "name":"sparlampe",
+      "png":"assets/obstaclePNGs/home/Energiesparlampe.png"
+    }
+  ],
+  "travel":[
+    {
+      "name":"bali",
+      "png":"assets/obstaclePNGs/travel/bali.png"
+    }
+  ]
+}

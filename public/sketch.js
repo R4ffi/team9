@@ -13,11 +13,37 @@ let cars;
 var speed = 5;
 let streetBackground;
 
+let Categories = [
+    {
+        "name": "beziehen",
+        "type": ItemTypes.ENERGYPACK
+    },
+    {
+        "name": "cars",
+        "type": ItemTypes.CAR
+    },
+    {
+        "name": "erzeugen",
+        "type": ItemTypes.ENERGYGEN
+    },
+    {
+        "name": "home",
+        "type": ItemTypes.LIVING
+    },
+    {
+        "name": "travel",
+        "type": ItemTypes.HOLIDAY
+    }
+]
+
 function preload() {
     cars = loadCars();
     Obstacles = new Array();
     particleTexture = loadImage("assets/particle_texture.png")
     streetBackground = loadImage("assets/street.png")
+    ObstacleImages = loadObstacles();
+    console.log(ObstacleImages)
+    this.itemCount = 0;
 }
 
 function setup() {
@@ -70,12 +96,31 @@ function loadCars() {
     return cars;
 }
 
+function loadObstacles() {
+    var obstacles = {};
+    $.getJSON("assets/obstaclePNGs/Obstacles.json", function(json) {
+        $.each(json, function(index, data) {
+            obstacles[index] = new Array();
+            $.each(data, function(i, item){
+                obstacles[index].push(loadImage(item.png));
+            })
+        });
+    });
+    return obstacles;
+}
 function displayObstacles(){
     let i = 0; 
     Obstacles[i].display();
+
     if(car.pos.y - Obstacles[i].pos.y < Obstacles[i].size && Obstacles[i].lane == car.lane){
+        this.itemCount++;
+        if(itemCount == 5){
+            itemCount = 0;
+        }
         inventory.addItem(Obstacles[i].item)
-        let item = new Item(ItemTypes.LIVING, -15, cars["truck"])
+        console.log(Categories[itemCount]);
+        console.log(Math.round(Math.random() * ObstacleImages[Categories[itemCount].name].length));
+        let item = new Item(Categories[itemCount].type, -15, ObstacleImages[Categories[itemCount].name][(Math.round(Math.random() * (ObstacleImages[Categories[itemCount].name].length-1)))])
         Obstacles.pop()
         Obstacles.push(new Obstacle(2, canvasHeight, canvasWidth, laneWidth, item));
     }
