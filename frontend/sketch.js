@@ -7,7 +7,6 @@ let canvasHeight = 400;
 let maxFuel = 100
 let fuel;
 let inventory;
-let canvasHeight = 800;
 let particleAnimator;
 
 function preload() {
