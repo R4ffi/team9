@@ -16,6 +16,7 @@ let streetBackground;
 let distance; 
 let framerate = 30;
 let count = 0;
+let maxDistance = 100;
 
 let Categories = [
     {
@@ -86,6 +87,7 @@ function draw() {
     if(count/framerate > 5){
         console.log("Consumption:"+consumption)
         fuel.use(consumption);
+        distance.distanceTraveled(speed)
         count = 0;
     }
     count++;
@@ -152,7 +154,7 @@ function displayObstacles(){
 function placeObstacle(lane){
     let randomIndex = (Math.round(Math.random() * (ObstacleImages[Categories[itemCount].name].length-1)));
     let item = new Item(Categories[itemCount].type, ObstacleImages[Categories[itemCount].name][randomIndex].consumption, ObstacleImages[Categories[itemCount].name][randomIndex].png);
-    Obstacles.push(new Obstacle(lane, canvasHeight, canvasWidth, laneWidth, item));
+    Obstacles.push(new Obstacle(lane, canvasWidth, canvasHeight, laneWidth, item));
 }
 
 function getNewObstacle(){
@@ -161,5 +163,5 @@ function getNewObstacle(){
     Obstacles.pop()
     let lane = Math.round(Math.random() * (4))+1;
     console.log(lane);
-    Obstacles.push(new Obstacle(lane, canvasHeight, canvasWidth, laneWidth, item));
+    Obstacles.push(new Obstacle(lane, canvasWidth, canvasHeight, laneWidth, item));
 }
