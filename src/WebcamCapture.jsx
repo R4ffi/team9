@@ -73,6 +73,7 @@ const WebcamCapture = () => {
       videoConstraints={videoConstraints}
     />
     <div>{emotion}</div>
+    <img src={`assets/emotions/${emotion}.png`} alt={emotion} />
   </React.Fragment >
   );
 };
