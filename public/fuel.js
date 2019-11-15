@@ -32,13 +32,13 @@ class Fuel{
         let offsetX = 40;
         push();
         fill(0,0,0,0);
-        rect(offsetX,this.canvasHeight - this.maxFuel*5/2 - offsetY, 15, this.maxFuel*5);
+        rect(offsetX,this.canvasHeight - this.maxFuel - offsetY, 15, this.maxFuel*2);
         pop();
         push();
         fill(0,255,0);
      
         stroke(0, 0, 0);
-        rect(offsetX,this.canvasHeight - (this.currentFuel*5/2) - offsetY, 15, this.currentFuel*5);
+        rect(offsetX,this.canvasHeight - (this.currentFuel) - offsetY, 15, this.currentFuel*2);
         
         pop();
         push();
