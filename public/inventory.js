@@ -16,6 +16,7 @@ class Inventory {
         this.Holiday = new Item(ItemTypes.HOLIDAY, 0, img)
         this.EnergyPackage = new Item(ItemTypes.ENERGYPACK, 0, img)
         this.EnergyGenerator = new Item(ItemTypes.ENERGYGEN, 0, img)
+        this.textSpace = 10
     }
     getCurrentItem(itemType) {
         switch (itemType) {
@@ -66,9 +67,11 @@ class Inventory {
         strokeWeight(10);
         rect(this.itemSpace, this.itemSpace, this.itemSize, this.itemSize);
         image(this.Living.image, this.itemSpace, this.itemSpace, this.itemSize, this.itemSize);
+        pop();
+        push();
         textSize(20);
         textFont('consolas');
-        text("Testtext", this.itemSpace, this.itemSpace);    
+        text(this.Living.consumption, this.itemSize + this.itemSpace, this.itemSpace + this.textSpace);
         pop();
     }
 
@@ -79,6 +82,11 @@ class Inventory {
         rect(this.itemSpace, this.itemSize + 1.5 * this.itemSpace, this.itemSize, this.itemSize);
         image(this.EnergyPackage.image, this.itemSpace, this.itemSize + 1.5 * this.itemSpace, this.itemSize, this.itemSize);
         pop();
+        push();
+        textSize(20);
+        textFont('consolas');
+        text(this.EnergyPackage.consumption, this.itemSize + this.itemSpace, this.itemSize + 1.5 * this.itemSpace + this.textSpace);
+        pop();
     }
 
     displayCar() {
@@ -87,6 +95,11 @@ class Inventory {
         strokeWeight(10);
         rect(this.itemSpace, 2 * this.itemSize + 2 * this.itemSpace, this.itemSize, this.itemSize);
         image(this.Car.image, this.itemSpace, 2 * this.itemSize + 2 * this.itemSpace, this.itemSize, this.itemSize);
+        pop();
+        push();
+        textSize(20);
+        textFont('consolas');
+        text(this.Car.consumption, this.itemSize + this.itemSpace, 2 * this.itemSize + 2 * this.itemSpace + this.textSpace);
         pop();
     }
 
@@ -97,6 +110,11 @@ class Inventory {
         rect(this.itemSpace, 3 * this.itemSize + 2.5 * this.itemSpace, this.itemSize, this.itemSize);
         image(this.Holiday.image, this.itemSpace, 3 * this.itemSize + 2.5 * this.itemSpace, this.itemSize, this.itemSize);
         pop();
+        push();
+        textSize(20);
+        textFont('consolas');
+        text(this.Holiday.consumption, this.itemSize + this.itemSpace, 3 * this.itemSize + 2.5 * this.itemSpace + this.textSpace);
+        pop();
     }
 
     displayEnergyGenerator() {
@@ -105,6 +123,11 @@ class Inventory {
         strokeWeight(10);
         rect(this.itemSpace, 4 * this.itemSize + 3 * this.itemSpace, this.itemSize, this.itemSize);
         image(this.EnergyGenerator.image, this.itemSpace, 4 * this.itemSize + 3 * this.itemSpace, this.itemSize, this.itemSize);
+        pop();
+        push();
+        textSize(20);
+        textFont('consolas');
+        text("+" + this.EnergyGenerator.consumption, this.itemSize + this.itemSpace, 4 * this.itemSize + 3 * this.itemSpace + this.textSpace);
         pop();
     }
 
