@@ -1,13 +1,13 @@
 class Car {
 
   constructor(canvasWidth, canvasHeight, laneWidth, image) {
-    this.pos = createVector(width >> 1, 50);
+    this.pos = createVector(canvasWidth >> 1, 50);
     this.laneWidth = laneWidth;
     this.canvasWidth = canvasWidth;
     this.canvasHeight = canvasHeight;
     this.width = 80;
     this.height = 66;
-    this.pos.y = canvasHeight - (100)
+    this.pos.y = canvasHeight - (160)
     this.lane = 3;
     this.image = image;
     this.ruckelSpeed = 3;

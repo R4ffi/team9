@@ -8,10 +8,12 @@ class ParticleAnimator {
     this.ps.applyForce(wind);
     this.ps.run();
     this.ps.origin = createVector(car.pos.x, car.pos.y+40);
-    
     for (let i = 0; i < 2; i++) {
       this.ps.addParticle();
     }
-
+  }
+  
+  move(){
+    this.ps.particles = [];
   }
 }
