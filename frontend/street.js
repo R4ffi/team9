@@ -6,7 +6,6 @@ class Street{
     this.lanes = 5;
     this.spacing = 20;
     this.shift = 0;
-    
   }
 
   display() {
