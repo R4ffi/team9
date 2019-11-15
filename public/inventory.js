@@ -66,12 +66,15 @@ class Inventory {
         strokeWeight(10);
         rect(this.itemSpace, this.itemSpace, this.itemSize, this.itemSize);
         image(this.Living.image, this.itemSpace, this.itemSpace, this.itemSize, this.itemSize);
+        textSize(20);
+        textFont('consolas');
+        text("Testtext", this.itemSpace, this.itemSpace);    
         pop();
     }
 
     displayEnergyPackage() {
         push();
-        stroke(93, 167, 221);
+        stroke(232, 128, 15);
         strokeWeight(10);
         rect(this.itemSpace, this.itemSize + 1.5 * this.itemSpace, this.itemSize, this.itemSize);
         image(this.EnergyPackage.image, this.itemSpace, this.itemSize + 1.5 * this.itemSpace, this.itemSize, this.itemSize);
