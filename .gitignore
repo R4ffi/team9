@@ -23,3 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 
 debug.log
+/.vs/slnx.sqlite
+/.vs/team9/v16/TestStore/0/testlog.manifest
+/.vs/team9/v16/TestStore/0/000-0000.testlog
+/.vs/ProjectSettings.json
