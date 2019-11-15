@@ -13,12 +13,9 @@ let cars;
 var speed = 10;
 let consumption = 0;
 let streetBackground;
-<<<<<<< HEAD
 let distance; 
-=======
 let framerate = 30;
 let count = 0;
->>>>>>> 82a0c4cce126487545f86cb173905e34955eb601
 
 let Categories = [
     {
