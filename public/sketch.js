@@ -9,9 +9,13 @@ let fuel;
 let inventory;
 let particleAnimator;
 let Obstacles;
+let cars;
+var speed = 10;
+
+
 
 function preload() {
-    this.cars = loadCars();
+    cars = loadCars();
     Obstacles = new Array();
     particleTexture = loadImage("assets/particle_texture.png")
 }
@@ -20,7 +24,7 @@ function setup() {
 
     placeObstacle(1);
     createCanvas(canvasWidth, canvasHeight);
-    car = new Car(canvasWidth, canvasHeight, laneWidth, this.cars["viper"]);
+    car = new Car(canvasWidth, canvasHeight, laneWidth, cars["viper"]);
     street = new Street(canvasWidth, canvasHeight, laneWidth);
     particleAnimator = new ParticleAnimator(particleTexture, car);
     fuel = new Fuel(canvasWidth, canvasHeight, maxFuel)
@@ -40,8 +44,6 @@ function draw() {
     displayObstacles();
     fuel.display();
     inventory.display();
-    
-    
 }
 
 
@@ -68,11 +70,17 @@ function loadCars(){
     return cars;
 }
 function displayObstacles(){
-    Obstacles[0].display();
-    if(car.pos.y - Obstacles[0].pos.y < Obstacles[0].size && Obstacles[0].lane == car.lane){
-        Obstacles[0].pos.y = 0;
+    let i = 0; 
+    Obstacles[i].display();
+    if(car.pos.y - Obstacles[i].pos.y < Obstacles[i].size && Obstacles[i].lane == car.lane){
+        inventory.addItem(Obstacles[i].item)
+        let item = new Item(ItemTypes.LIVING, -15, cars["truck"])
+        Obstacles.pop()
+        Obstacles.push(new Obstacle(2, canvasHeight, canvasWidth, laneWidth, item));
     }
 }
 function placeObstacle(lane){
-    Obstacles.push(new Obstacle(lane, canvasHeight, canvasWidth, laneWidth));
+    let item = new Item(ItemTypes.CAR, -10, cars["taxi"])
+    Obstacles.push(new Obstacle(lane, canvasHeight, canvasWidth, laneWidth, item));
 }
+

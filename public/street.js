@@ -12,7 +12,7 @@ class Street{
     if(this.shift < -this.spacing*1.7){
       this.shift = 0;
     }
-    this.shift -= 2;
+    this.shift -= speed;
     this.firstLane = (this.canvasWidth - (this.lanes * this.laneWidth)) /2
     let i = 0;
     var totalsplits = this.canvasHeight/this.spacing;
