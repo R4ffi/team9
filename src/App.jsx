@@ -5,8 +5,12 @@ import WebcamCapture from "./WebcamCapture";
 function App() {
   return (
     <div className="App">
-      <WebcamCapture />
-      <div id="game"></div>
+      <div className="gameDiv">
+        <div id="game"></div>
+      </div>
+      <div className="camDiv">
+        <WebcamCapture />
+      </div>
     </div >
   );
 }
