@@ -9,11 +9,13 @@ let fuel;
 let inventory;
 let particleAnimator;
 let Obstacles;
+let streetBackground;
 
 function preload() {
     this.cars = loadCars();
     Obstacles = new Array();
     particleTexture = loadImage("assets/particle_texture.png")
+    streetBackground = loadImage("assets/street.png")
 }
 
 function setup() {
@@ -22,7 +24,7 @@ function setup() {
     var canvas = createCanvas(canvasWidth, canvasHeight);
     canvas.parent('game');
     car = new Car(canvasWidth, canvasHeight, laneWidth, this.cars["viper"]);
-    street = new Street(canvasWidth, canvasHeight, laneWidth);
+    street = new Street(canvasWidth, canvasHeight, laneWidth, streetBackground);
     particleAnimator = new ParticleAnimator(particleTexture, car);
     fuel = new Fuel(canvasWidth, canvasHeight, maxFuel)
     inventory = new Inventory(canvasWidth, canvasHeight, 40, 60)
