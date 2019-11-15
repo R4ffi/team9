@@ -3,91 +3,111 @@
     {
       
       "name":"basisstrom",
-      "png":"assets/obstaclePNGs/beziehen/basisstrom.png"
+      "png":"assets/obstaclePNGs/beziehen/basisstrom.png",
+      "consumption":-4
     },
     {
       "name":"naturstrom",
-      "png":"assets/obstaclePNGs/beziehen/naturstrom.png"
+      "png":"assets/obstaclePNGs/beziehen/naturstrom.png",
+      "consumption":-3
     },
     {
       "name":"oekostrom",
-      "png":"assets/obstaclePNGs/beziehen/oekostrom.png"
+      "png":"assets/obstaclePNGs/beziehen/oekostrom.png",
+      "consumption":-2
     }
   ],
   "cars":[
     {
       "name":"dodge",
-      "png":"assets/obstaclePNGs/cars/DodgeRam.png"
+      "png":"assets/obstaclePNGs/cars/DodgeRam.png",
+      "consumption":-5
     },
     {
       "name":"porsche",
-      "png":"assets/obstaclePNGs/cars/porsche2.png"
+      "png":"assets/obstaclePNGs/cars/porsche2.png",
+      "consumption":-4
     },
     {
       "name":"renaultzoe",
-      "png":"assets/obstaclePNGs/cars/RenaultZoe.png"
+      "png":"assets/obstaclePNGs/cars/RenaultZoe.png",
+      "consumption":-2
     },
     {
       "name":"tesla",
-      "png":"assets/obstaclePNGs/cars/tesla0.png"
+      "png":"assets/obstaclePNGs/cars/tesla0.png",
+      "consumption":-1
     },
     {
       "name":"smart",
-      "png":"assets/obstaclePNGs/cars/SmartIcon.png"
+      "png":"assets/obstaclePNGs/cars/SmartIcon.png",
+      "consumption":-3
     }
   ],
   "erzeugen":[
     {
       "name":"solar",
-      "png":"assets/obstaclePNGs/Erzeugen/Solarzelle.png"
+      "png":"assets/obstaclePNGs/Erzeugen/Solarzelle.png",
+      "consumption":5
     },
     {
       "name":"waermepumpe",
-      "png":"assets/obstaclePNGs/Erzeugen/Waermepumpe.png"
+      "png":"assets/obstaclePNGs/Erzeugen/Waermepumpe.png",
+      "consumption":2
     },
     {
       "name":"windrad",
-      "png":"assets/obstaclePNGs/Erzeugen/Windrad.png"
+      "png":"assets/obstaclePNGs/Erzeugen/Windrad.png",
+      "consumption":3
     }
   ],
     "home":[
     {
       "name":"sparlampe",
-      "png":"assets/obstaclePNGs/home/Energiesparlampe.png"
+      "png":"assets/obstaclePNGs/home/Energiesparlampe.png",
+      "consumption":-2
     },
     {
       "name":"KuecheAPlus",
-      "png":"assets/obstaclePNGs/home/KuecheAPlus.png"
+      "png":"assets/obstaclePNGs/home/KuecheAPlus.png",
+      "consumption":-1
     },
     {
       "name":"oelheitzung",
-      "png":"assets/obstaclePNGs/home/oelheitzung.png"
+      "png":"assets/obstaclePNGs/home/oelheitzung.png",
+      "consumption":-4
     },
     {
       "name":"Raumtemperatur",
-      "png":"assets/obstaclePNGs/home/Raumtemperatur.png"
+      "png":"assets/obstaclePNGs/home/Raumtemperatur.png",
+      "consumption":-3
     }
   ],
   "travel":[
     {
       "name":"bali",
-      "png":"assets/obstaclePNGs/travel/bali.png"
+      "png":"assets/obstaclePNGs/travel/bali.png",
+      "consumption":-5
     },
     {
       "name":"bern",
-      "png":"assets/obstaclePNGs/travel/bern.png"
+      "png":"assets/obstaclePNGs/travel/bern.png",
+      "consumption":-1
     },
     {
       "name":"florenz",
-      "png":"assets/obstaclePNGs/travel/florenz.png"
+      "png":"assets/obstaclePNGs/travel/florenz.png",
+      "consumption":-3
     },
     {
       "name":"graubuenden",
-      "png":"assets/obstaclePNGs/travel/graubuenden.png"
+      "png":"assets/obstaclePNGs/travel/graubuenden.png",
+      "consumption":-2
     },
     {
       "name":"newyork",
-      "png":"assets/obstaclePNGs/travel/newyork.png"
+      "png":"assets/obstaclePNGs/travel/newyork.png",
+      "consumption":-4
     }
   ]
 }

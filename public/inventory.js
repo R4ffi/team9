@@ -10,11 +10,12 @@ class Inventory {
         this.canvasHeight = canvasHeight;
         this.itemSpace = itemSpace;
         this.itemSize = itemSize;
-        this.Living = new Item(ItemTypes.LIVING, 10, cars["viper"])
-        this.Car = new Item(ItemTypes.CAR, 10, cars["viper"])
-        this.Holiday = new Item(ItemTypes.HOLIDAY, 10, cars["viper"])
-        this.EnergyPackage = new Item(ItemTypes.ENERGYPACK, 10, cars["viper"])
-        this.EnergyGenerator = new Item(ItemTypes.ENERGYGEN, 10, cars["viper"])
+        let img = this.loadInitImg();
+        this.Living = new Item(ItemTypes.LIVING, 0, img)
+        this.Car = new Item(ItemTypes.CAR, 0, img)
+        this.Holiday = new Item(ItemTypes.HOLIDAY, 0, img)
+        this.EnergyPackage = new Item(ItemTypes.ENERGYPACK, 0, img)
+        this.EnergyGenerator = new Item(ItemTypes.ENERGYGEN, 0, img)
     }
 
     addItem(item) {
@@ -89,5 +90,29 @@ class Inventory {
         rect(this.itemSize + 2 * this.itemSpace, this.itemSize + 2 * this.itemSpace, this.itemSize, this.itemSize);
         image(this.EnergyGenerator.image, this.itemSize + 2 * this.itemSpace, this.itemSize + 2 * this.itemSpace, this.itemSize, this.itemSize);
         pop();
+    }
+
+    getConsumption(){
+        let consumption = 0;
+        consumption += this.Living.consumption;
+        consumption += this.Car.consumption;
+        consumption += this.Holiday.consumption;
+        consumption += this.EnergyPackage.consumption;
+        consumption += this.EnergyGenerator.consumption;
+        return consumption/5;
+    
+    }
+
+    loadInitImg(){
+        let img = createImage(66, 66);
+        img.loadPixels();
+        for (let i = 0; i < img.width; i++) {
+        for (let j = 0; j < img.height; j++) {
+            img.set(i, j, color(255, 255, 255));
+        }
+        }
+        img.updatePixels();
+        
+        return img;
     }
 }
