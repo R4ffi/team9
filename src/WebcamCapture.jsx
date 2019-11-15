@@ -22,7 +22,10 @@ const WebcamCapture = () => {
       screenshotFormat="image/jpeg"
       width={200}
       videoConstraints={videoConstraints}
-    /> <button onClick={capture} > Capture photo </button>
+    />
+    <button onClick={capture} >
+      Capture photo
+      </button>
   </React.Fragment >
   );
 };

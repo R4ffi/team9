@@ -19,7 +19,8 @@ function preload() {
 function setup() {
 
     placeObstacle(1);
-    createCanvas(canvasWidth, canvasHeight);
+    var canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent('game');
     car = new Car(canvasWidth, canvasHeight, laneWidth, this.cars["viper"]);
     street = new Street(canvasWidth, canvasHeight, laneWidth);
     particleAnimator = new ParticleAnimator(particleTexture, car);
@@ -40,8 +41,8 @@ function draw() {
     displayObstacles();
     fuel.display();
     inventory.display();
-    
-    
+
+
 }
 
 
@@ -56,23 +57,25 @@ function keyPressed() {
     }
 }
 
-function loadCars(){
+function loadCars() {
     var cars = {};
     $.getJSON("assets/cars/cars.json", function(json) {
         console.log(json.cars);
         $.each(json.cars, function(i, item) {
             cars[item.name] = loadImage(item.png);
         });
-        
+
     });
     return cars;
 }
-function displayObstacles(){
+
+function displayObstacles() {
     Obstacles[0].display();
-    if(car.pos.y - Obstacles[0].pos.y < Obstacles[0].size && Obstacles[0].lane == car.lane){
+    if (car.pos.y - Obstacles[0].pos.y < Obstacles[0].size && Obstacles[0].lane == car.lane) {
         Obstacles[0].pos.y = 0;
     }
 }
-function placeObstacle(lane){
+
+function placeObstacle(lane) {
     Obstacles.push(new Obstacle(lane, canvasHeight, canvasWidth, laneWidth));
 }
