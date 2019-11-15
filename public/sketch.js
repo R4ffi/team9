@@ -13,8 +13,12 @@ let cars;
 var speed = 10;
 let consumption = 0;
 let streetBackground;
+<<<<<<< HEAD
+let distance; 
+=======
 let framerate = 30;
 let count = 0;
+>>>>>>> 82a0c4cce126487545f86cb173905e34955eb601
 
 let Categories = [
     {
@@ -50,6 +54,7 @@ function preload() {
 }
 
 function setup() {
+    let rightSideOfStreet = canvasWidth / 2 + 5* laneWidth; 
     placeObstacle(1);
     car = new Car(canvasWidth, canvasHeight, laneWidth, cars["viper"]);
     let canvas = createCanvas(canvasWidth, canvasHeight);
@@ -58,6 +63,7 @@ function setup() {
     particleAnimator = new ParticleAnimator(particleTexture, car);
     fuel = new Fuel(canvasWidth, canvasHeight, maxFuel)
     inventory = new Inventory(canvasWidth, canvasHeight, 40, 60)
+    distance = new Distance(canvasWidth, canvasHeight, rightSideOfStreet , canvasHeight - 100, canvasWidth - rightSideOfStreet, 100)
 
 }
 
@@ -79,6 +85,7 @@ function draw() {
     textSize(15);
     text("Consumption: "+consumption, canvasWidth - canvasWidth/5, 20)
     pop();
+    distance.display();
     if(count/framerate > 5){
         console.log("Consumption:"+consumption)
         fuel.use(consumption);
