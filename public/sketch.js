@@ -1,9 +1,9 @@
 var car;
 let carImage;
 let street;
-let canvasWidth = height;
+let canvasWidth;
 let laneWidth = 60;
-let canvasHeight = width;
+let canvasHeight;
 let maxFuel = 50;
 let fuel;
 let inventory;
@@ -60,6 +60,8 @@ function preload() {
 }
 
 function setup() {
+    canvasHeight = displayHeight*0.5;
+    canvasWidth = displayWidth*0.8;
     let rightSideOfStreet = canvasWidth / 2 + 5 * laneWidth;
     placeObstacle(1);
     car = new Car(canvasWidth, canvasHeight, laneWidth, cars["viper"]);
