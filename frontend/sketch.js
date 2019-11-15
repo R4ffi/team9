@@ -13,12 +13,13 @@ function preload() {
 
 function setup() {
     createCanvas(canvasWidth, canvasHeight);
-    car = new Car(canvasWidth, canvasHeight, laneWidth, this.cars["audi"]);
+    car = new Car(canvasWidth, canvasHeight, laneWidth, this.cars["viper"]);
     street = new Street(canvasWidth, canvasHeight, laneWidth);
     particleAnimator = new ParticleAnimator(particleTexture, car);
 }
 
 function draw() {
+    frameRate(30);
     imageMode(CENTER);
     clear();
     street.display();
@@ -31,10 +32,12 @@ function draw() {
 function keyPressed() {
     if (keyCode === LEFT_ARROW && car.lane > 1) {
         car.moveLeft();
+        particleAnimator.move();
     }
 
     if (keyCode === RIGHT_ARROW && car.lane < street.lanes) {
         car.moveRight();
+        particleAnimator.move();
     }
 }
 
