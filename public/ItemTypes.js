@@ -23,7 +23,7 @@ const ItemTypes = {
         r: 93,
         g: 167,
         b: 221
-    },
+    }
 }
 /*
 LIVING: {

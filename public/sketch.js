@@ -10,7 +10,7 @@ let inventory;
 let particleAnimator;
 let Obstacles;
 let cars;
-var speed = 10;
+var speed = 5;
 
 
 
@@ -21,10 +21,8 @@ function preload() {
 }
 
 function setup() {
-
     placeObstacle(1);
     car = new Car(canvasWidth, canvasHeight, laneWidth, cars["viper"]);
-
     var canvas = createCanvas(canvasWidth, canvasHeight);
     canvas.parent('game');
     street = new Street(canvasWidth, canvasHeight, laneWidth);
@@ -46,11 +44,6 @@ function draw() {
     displayObstacles();
     fuel.display();
     inventory.display();
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 1830ca5341070ee29191ad8e4194aacc47f38b5b
 }
 
 
@@ -76,7 +69,7 @@ function loadCars() {
     });
     return cars;
 }
-<<<<<<< HEAD
+
 function displayObstacles(){
     let i = 0; 
     Obstacles[i].display();
@@ -91,17 +84,3 @@ function placeObstacle(lane){
     let item = new Item(ItemTypes.CAR, -10, cars["taxi"])
     Obstacles.push(new Obstacle(lane, canvasHeight, canvasWidth, laneWidth, item));
 }
-
-=======
-
-function displayObstacles() {
-    Obstacles[0].display();
-    if (car.pos.y - Obstacles[0].pos.y < Obstacles[0].size && Obstacles[0].lane == car.lane) {
-        Obstacles[0].pos.y = 0;
-    }
-}
-
-function placeObstacle(lane) {
-    Obstacles.push(new Obstacle(lane, canvasHeight, canvasWidth, laneWidth));
-}
->>>>>>> 1830ca5341070ee29191ad8e4194aacc47f38b5b
