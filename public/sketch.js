@@ -18,6 +18,7 @@ let distance;
 let framerate = 30;
 let count = 0;
 let maxDistance = 100;
+let History;
 
 let Categories = [{
         "name": "beziehen",
@@ -50,6 +51,7 @@ function preload() {
     obstacleImages = loadObstacles();
     console.log(obstacleImages)
     this.itemCount = 0;
+    History = new Array();
 }
 
 function setup() {
@@ -171,13 +173,18 @@ function displayObstacles() {
             itemCount = 0;
         }
         speed += 0.2
-        if(inventory.getCurrentItem(Obstacles[i].item.type).consumption > Obstacles[i].item.consumption){
+        let current = inventory.getCurrentItem(Obstacles[i].item.type)
+        if(current.consumption > Obstacles[i].item.consumption){
             background(255,0,0,100);
-        }else if(inventory.getCurrentItem(Obstacles[i].item.type).consumption < Obstacles[i].item.consumption){
+        }else if(current.consumption < Obstacles[i].item.consumption){
             background(0,255,0,100);
         }else{
             background(0,0,255,100);
         }
+        History.push({
+            "timestamp": Date.now(),
+            "object": current 
+    })
         inventory.addItem(Obstacles[i].item)
         consumption = inventory.getConsumption();
         getNewObstacle();
