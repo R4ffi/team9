@@ -9,7 +9,7 @@ class Street {
         this.background = background;
         this.y = 0;
 
-        this.scrollSpeed = 2;
+        this.scrollSpeed = speed;
     }
 
     display() {
