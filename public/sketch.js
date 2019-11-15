@@ -150,6 +150,10 @@ function displayObstacles() {
     Obstacles[i].display();
     Obstacles[i].pos.y += speed;
     if (Obstacles[i].pos.y >= canvasHeight) {
+        this.itemCount++;
+        if (itemCount == 5) {
+            itemCount = 0;
+        }
         Obstacles[i].pos.y = 0;
         getNewObstacle();
     }
