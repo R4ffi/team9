@@ -4,7 +4,7 @@ let street;
 let canvasWidth = 800;
 let laneWidth = 60;
 let canvasHeight = 600;
-let maxFuel = 20;
+let maxFuel = 50;
 let fuel;
 let inventory;
 let particleAnimator;
@@ -51,6 +51,9 @@ function preload() {
     obstacleImages = loadObstacles();
     console.log(obstacleImages)
     this.itemCount = 0;
+    soundFormats('mp3', 'ogg');
+    sadSoundEffect = loadSound('assets/soundEffects/Punch.mp3');
+    happySoundEffect = loadSound('assets/soundEffects/SuccessSoundEffect.mp3');
     History = new Array();
 }
 
@@ -76,6 +79,9 @@ function setup() {
     });
     hammer.on("swipe", swiped);
 //
+
+    sadSoundEffect.setVolume(0.5);
+    happySoundEffect.setVolume(0.5);
 }
 
 function draw() {
@@ -111,8 +117,8 @@ function draw() {
     fill(100);
     textSize(20);
     textFont('consolas');
-    text("Consumption: "+consumption, canvasWidth - canvasWidth / 5, 20)
- 
+    text("Consumption: " + consumption, canvasWidth - canvasWidth / 5, 20)
+
     pop();
     distance.display();
     if (count / framerate > 5) {
@@ -145,9 +151,9 @@ function keyPressed() {
 
 function loadCars() {
     var cars = {};
-    $.getJSON("assets/cars/cars.json", function (json) {
+    $.getJSON("assets/cars/cars.json", function(json) {
         console.log(json.cars);
-        $.each(json.cars, function (i, item) {
+        $.each(json.cars, function(i, item) {
             cars[item.name] = loadImage(item.png);
         });
 
@@ -157,10 +163,10 @@ function loadCars() {
 
 function loadObstacles() {
     var obstacles = {};
-    $.getJSON("assets/obstaclePNGs/Obstacles.json", function (json) {
-        $.each(json, function (index, data) {
+    $.getJSON("assets/obstaclePNGs/Obstacles.json", function(json) {
+        $.each(json, function(index, data) {
             obstacles[index] = new Array();
-            $.each(data, function (i, item) {
+            $.each(data, function(i, item) {
                 obstacles[index].push({
                     "png": loadImage(item.png),
                     "consumption": item.consumption
@@ -191,17 +197,19 @@ function displayObstacles() {
         }
         speed += 0.2
         let current = inventory.getCurrentItem(Obstacles[i].item.type)
-        if(current.consumption > Obstacles[i].item.consumption){
-            background(255,0,0,100);
-        }else if(current.consumption < Obstacles[i].item.consumption){
-            background(0,255,0,100);
-        }else{
-            background(0,0,255,100);
+        if (current.consumption > Obstacles[i].item.consumption) {
+            background(255, 0, 0, 100);
+            sadSoundEffect.play();
+        } else if (inventory.getCurrentItem(Obstacles[i].item.type).consumption < Obstacles[i].item.consumption) {
+            background(0, 255, 0, 100);
+            happySoundEffect.play();
+        } else {
+            background(0, 0, 255, 100);
         }
         History.push({
             "timestamp": Date.now(),
             "object": Obstacles[i].item
-    })
+        })
         inventory.addItem(Obstacles[i].item)
         consumption = inventory.getConsumption();
         getNewObstacle();
@@ -236,10 +244,9 @@ function setStartObstacle() {
 
 function getWorstObstacle(obstacleArray, categorie) {
     let res = Math.min.apply(Math, obstacleArray.map(function(o) { return o.consumption; }))
-    let worst = obstacleArray.find(function(o){ return o.consumption == res; })
+    let worst = obstacleArray.find(function(o) { return o.consumption == res; })
     return new Item(categorie.type, worst.consumption, worst.png);
 }
-
 
 function swiped(event) {
     console.log(event);
@@ -249,3 +256,10 @@ function swiped(event) {
       left();
     }
   }
+
+function sendDataToReactApp(value) {
+    var element = document.getElementById('transfer-input');
+    element.value = value;
+    $("#transfer-input").change();
+    element.click();
+}
