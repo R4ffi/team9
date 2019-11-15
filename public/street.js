@@ -16,7 +16,6 @@ class Street {
     }
 
     display() {
-        console.log(`X: ${this.xOffset}, Y: ${this.y}`)
         for (let i = 0; i < this.numberOfBackgroundImages; i++) {
             const yPos = this.y + ((i - 1) * this.background.height + this.yOffset);
             image(this.background, this.xOffset, yPos);

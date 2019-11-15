@@ -17,7 +17,7 @@ class Obstacle {
       this.pos.y = 0;
     } 
     this.pos.y += speed;
-    rect(this.pos.x, this.pos.y, this.size, this.size, 20);
+    rect(this.pos.x, this.pos.y, this.size, this.size);
     image(this.item.image,this.pos.x,  this.pos.y, this.size, this.size);
     pop();
   }
