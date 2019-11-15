@@ -169,6 +169,13 @@ function displayObstacles() {
             itemCount = 0;
         }
         speed += 0.2
+        if(inventory.getCurrentItem(Obstacles[i].item.type).consumption > Obstacles[i].item.consumption){
+            background('red');
+        }else if(inventory.getCurrentItem(Obstacles[i].item.type).consumption < Obstacles[i].item.consumption){
+            background('green');
+        }else{
+            background('blue');
+        }
         inventory.addItem(Obstacles[i].item)
         consumption = inventory.getConsumption();
         getNewObstacle();
