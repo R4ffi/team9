@@ -69,7 +69,7 @@ function setup() {
     inventory = new Inventory(canvasWidth, canvasHeight, 40, 60)
     setStartObstacle();
     distance = new Distance(canvasWidth, canvasHeight, rightSideOfStreet, canvasHeight - 100, canvasWidth - rightSideOfStreet, 100);
-//for mobile
+    //for mobile
     var options = {
         preventDefault: true
       };
@@ -78,7 +78,7 @@ function setup() {
       direction: Hammer.DIRECTION_ALL
     });
     hammer.on("swipe", swiped);
-//
+    //
 
     sadSoundEffect.setVolume(0.5);
     happySoundEffect.setVolume(0.5);
