@@ -112,8 +112,7 @@ class Inventory {
         consumption += this.Holiday.consumption;
         consumption += this.EnergyPackage.consumption;
         consumption += this.EnergyGenerator.consumption;
-        return consumption / 5;
-
+        return consumption;
     }
 
     loadInitImg() {
