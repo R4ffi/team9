@@ -37,18 +37,21 @@ class Fuel{
       
         var bla = 10;
         var blu = this.canvasHeight - (this.maxSize / this.maxFuel * this.currentFuel);
-  
+        
+        push();
+        fill(0,0,0,0);
+        rect(10,this.canvasHeight - this.maxSize, 15, this.maxSize);
+        pop();
         push();
         fill(0,255,0);
         stroke(0, 0, 0);
-        rect(bla, blu, 15 , this.maxSize / this.maxFuel * this.currentFuel);
-
+        rect(bla, blu, 15, this.maxSize / this.maxFuel * this.currentFuel);
+        
         pop();
         push();
-        fill(255);
-        stroke(255);
+        fill(100);
         textSize(25);
-        text("Fuel:"+this.currentFuel, 10, this.canvasHeight-10);    
+        text("Fuel:"+Math.round(this.currentFuel), 10, this.canvasHeight-10);    
         pop();
         if(this.additionalFule > 0)
         {
