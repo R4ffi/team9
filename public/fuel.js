@@ -19,12 +19,12 @@ class Fuel{
 
     //Schedule all 5 sec. 
     use(consumption) {
-
-        this.additionalFule -= consumption;
+        this.additionalFule += consumption;
         if(this.additionalFule < 0) {
             this.currentFuel += this.additionalFule;
             this.additionalFule = 0;
         }
+        console.log(this.currentFuel)
     }
 
     getFuel() {
@@ -34,18 +34,28 @@ class Fuel{
     display() {
         if(this.currentFuel <= 0)
             return;
+      
+        var bla = 10;
+        var blu = this.canvasHeight - (this.maxSize / this.maxFuel * this.currentFuel);
+  
         push();
-        fill(255,0,0);
+        fill(0,255,0);
         stroke(0, 0, 0);
-        rect(10, this.canvasHeight - (this.maxSize / this.maxFuel * this.currentFuel), 15 , this.maxSize / this.maxFuel * this.currentFuel);
+        rect(bla, blu, 15 , this.maxSize / this.maxFuel * this.currentFuel);
+
+        pop();
+        push();
+        fill(255);
+        stroke(255);
+        textSize(25);
+        text("Fuel:"+this.currentFuel, 10, this.canvasHeight-10);    
         pop();
         if(this.additionalFule > 0)
         {
             push();
-            fill(0,255,0);
+            fill(0,0,0);
             stroke(0, 0, 0);
-            var bla = this.canvasHeight - this.maxSize - (this.maxSize / this.maxFuel * this.additionalFule); 
-            var blu = this.canvasHeight - this.maxSize;
+
             rect(10, this.canvasHeight - this.maxSize - (this.maxSize / this.maxFuel * this.additionalFule), 15 , this.maxSize / this.maxFuel * this.additionalFule);
             pop();
         }

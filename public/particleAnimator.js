@@ -11,6 +11,9 @@ class ParticleAnimator {
     for (let i = 0; i < 2; i++) {
       this.ps.addParticle();
     }
+    if(this.ps.particles.length > 40){
+      this.ps.particles = [];
+    }
   }
   
   move(){

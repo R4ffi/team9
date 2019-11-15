@@ -4,15 +4,21 @@ let street;
 let canvasWidth = 800;
 let laneWidth = 60;
 let canvasHeight = 800;
-let maxFuel = 100
+let maxFuel = 20;
 let fuel;
 let inventory;
 let particleAnimator;
 let Obstacles;
 let cars;
-var speed = 5;
+var speed = 10;
+let consumption = 0;
 let streetBackground;
+<<<<<<< HEAD
 let distance; 
+=======
+let framerate = 30;
+let count = 0;
+>>>>>>> 82a0c4cce126487545f86cb173905e34955eb601
 
 let Categories = [
     {
@@ -51,21 +57,21 @@ function setup() {
     let rightSideOfStreet = canvasWidth / 2 + 5* laneWidth; 
     placeObstacle(1);
     car = new Car(canvasWidth, canvasHeight, laneWidth, cars["viper"]);
-    var canvas = createCanvas(canvasWidth, canvasHeight);
+    let canvas = createCanvas(canvasWidth, canvasHeight);
     canvas.parent('game');
     street = new Street(canvasWidth, canvasHeight, laneWidth, streetBackground);
     particleAnimator = new ParticleAnimator(particleTexture, car);
     fuel = new Fuel(canvasWidth, canvasHeight, maxFuel)
     inventory = new Inventory(canvasWidth, canvasHeight, 40, 60)
-
     distance = new Distance(canvasWidth, canvasHeight, rightSideOfStreet , canvasHeight - 100, canvasWidth - rightSideOfStreet, 100)
+
 }
 
 function draw() {
-    frameRate(30);
+    clear();
+    frameRate(framerate);
     imageMode(CENTER);
     rectMode(CENTER);
-    clear();
     street.display();
     car.display();
     push();
@@ -74,7 +80,16 @@ function draw() {
     displayObstacles();
     fuel.display();
     inventory.display();
+<<<<<<< HEAD
     distance.display();
+=======
+    if(count/framerate > 5){
+        console.log("Consumption:"+consumption)
+        fuel.use(consumption);
+        count = 0;
+    }
+    count++;
+>>>>>>> 82a0c4cce126487545f86cb173905e34955eb601
 }
 
 
@@ -107,7 +122,10 @@ function loadObstacles() {
         $.each(json, function(index, data) {
             obstacles[index] = new Array();
             $.each(data, function(i, item){
-                obstacles[index].push(loadImage(item.png));
+                obstacles[index].push({
+                    "png": loadImage(item.png),
+                    "consumption": item.consumption
+                });
             })
         });
     });
@@ -123,7 +141,9 @@ function displayObstacles(){
             itemCount = 0;
         }
         inventory.addItem(Obstacles[i].item)
-        let item = new Item(Categories[itemCount].type, -15, ObstacleImages[Categories[itemCount].name][(Math.round(Math.random() * (ObstacleImages[Categories[itemCount].name].length-1)))])
+        consumption = inventory.getConsumption();
+        let randomIndex = (Math.round(Math.random() * (ObstacleImages[Categories[itemCount].name].length-1)))
+        let item = new Item(Categories[itemCount].type,  ObstacleImages[Categories[itemCount].name][randomIndex].consumption, ObstacleImages[Categories[itemCount].name][randomIndex].png)
         Obstacles.pop()
         let lane = Math.round(Math.random() * (4))+1;
         console.log(lane);
@@ -131,6 +151,7 @@ function displayObstacles(){
     }
 }
 function placeObstacle(lane){
-    let item = new Item(ItemTypes.CAR, -10, cars["taxi"])
+    let randomIndex = (Math.round(Math.random() * (ObstacleImages[Categories[itemCount].name].length-1)));
+    let item = new Item(Categories[itemCount].type, ObstacleImages[Categories[itemCount].name][randomIndex].consumption, ObstacleImages[Categories[itemCount].name][randomIndex].png);
     Obstacles.push(new Obstacle(lane, canvasHeight, canvasWidth, laneWidth, item));
 }
