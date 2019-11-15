@@ -77,16 +77,14 @@ function draw() {
     displayObstacles();
     fuel.display();
     inventory.display();
-<<<<<<< HEAD
+
     distance.display();
-=======
     if(count/framerate > 5){
         console.log("Consumption:"+consumption)
         fuel.use(consumption);
         count = 0;
     }
     count++;
->>>>>>> 82a0c4cce126487545f86cb173905e34955eb601
 }
 
 
