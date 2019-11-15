@@ -18,7 +18,12 @@ function App() {
       <div class="row"> 
         <div className="gameDiv">
           <div id="game"></div>
+          <center>
+            <button id="left">LEFT--</button>
+            <button id="right">--></button>
+        </center>
         </div>
+        
         <div className="camDiv">
           <WebcamCapture />
         </div>
