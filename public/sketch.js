@@ -16,6 +16,7 @@ let streetBackground;
 let distance; 
 let framerate = 30;
 let count = 0;
+let maxDistance = 100;
 
 let Categories = [
     {
@@ -87,6 +88,7 @@ function draw() {
     if(count/framerate > 5){
         console.log("Consumption:"+consumption)
         fuel.use(consumption);
+        distance.distanceTraveled(speed)
         count = 0;
     }
     count++;
