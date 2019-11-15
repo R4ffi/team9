@@ -50,6 +50,9 @@ function preload() {
     obstacleImages = loadObstacles();
     console.log(obstacleImages)
     this.itemCount = 0;
+    soundFormats('mp3', 'ogg');
+    sadSoundEffect = loadSound('assets/soundEffects/Punch.mp3');
+    happySoundEffect = loadSound('assets/soundEffects/SuccessSoundEffect.mp3');
 }
 
 function setup() {
@@ -64,6 +67,8 @@ function setup() {
     inventory = new Inventory(canvasWidth, canvasHeight, 40, 60)
     setStartObstacle();
     distance = new Distance(canvasWidth, canvasHeight, rightSideOfStreet, canvasHeight - 100, canvasWidth - rightSideOfStreet, 100);
+    sadSoundEffect.setVolume(0.5);
+    happySoundEffect.setVolume(0.5);
 }
 
 function draw() {
@@ -173,8 +178,10 @@ function displayObstacles() {
         speed += 0.2
         if(inventory.getCurrentItem(Obstacles[i].item.type).consumption > Obstacles[i].item.consumption){
             background(255,0,0,100);
+            sadSoundEffect.play();
         }else if(inventory.getCurrentItem(Obstacles[i].item.type).consumption < Obstacles[i].item.consumption){
             background(0,255,0,100);
+            happySoundEffect.play();
         }else{
             background(0,0,255,100);
         }
