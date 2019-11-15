@@ -17,9 +17,22 @@ class Inventory {
         this.EnergyPackage = new Item(ItemTypes.ENERGYPACK, 0, img)
         this.EnergyGenerator = new Item(ItemTypes.ENERGYGEN, 0, img)
     }
+    getCurrentItem(itemType) {
+        switch (itemType) {
+            case ItemTypes.LIVING:
+                return this.Living;
+            case ItemTypes.CAR:
+                return this.Car;
+            case ItemTypes.HOLIDAY:
+                return this.Holiday;
+            case ItemTypes.ENERGYGEN:
+                return this.EnergyGenerator;
+            case ItemTypes.ENERGYPACK:
+                return this.EnergyPackage;
+        }
+    }
 
     addItem(item) {
-        console.log("added item" + item.type)
         switch (item.type) {
             case ItemTypes.LIVING:
                 this.Living = item;
@@ -92,27 +105,27 @@ class Inventory {
         pop();
     }
 
-    getConsumption(){
+    getConsumption() {
         let consumption = 0;
         consumption += this.Living.consumption;
         consumption += this.Car.consumption;
         consumption += this.Holiday.consumption;
         consumption += this.EnergyPackage.consumption;
         consumption += this.EnergyGenerator.consumption;
-        return consumption/5;
-    
+        return consumption / 5;
+
     }
 
-    loadInitImg(){
+    loadInitImg() {
         let img = createImage(66, 66);
         img.loadPixels();
         for (let i = 0; i < img.width; i++) {
-        for (let j = 0; j < img.height; j++) {
-            img.set(i, j, color(255, 255, 255));
-        }
+            for (let j = 0; j < img.height; j++) {
+                img.set(i, j, color(255, 255, 255));
+            }
         }
         img.updatePixels();
-        
+
         return img;
     }
 }
