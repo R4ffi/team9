@@ -1,16 +1,36 @@
+let car;
+let carImage;
+let street;
+let canvasWidth = 800;
+let laneWidth = 60;
+let canvasHeight = 400;
+
+function preload(){
+	carImage = loadImage("./Audi.png");
+}
+
 function setup() {
-    var cnv = createCanvas(1000, 1000);
-    cnv.parent('game');
-    cnv.style('display', 'block');
-    background(255, 0, 200);
+	createCanvas(canvasWidth, canvasHeight);
+  car = new Car(canvasWidth, canvasHeight, laneWidth, carImage);
+  street = new Street(canvasWidth, canvasHeight, laneWidth)
 }
 
 function draw() {
-    if (mouseIsPressed) {
-        fill(0);
-    } else {
-        fill(255);
-    }
+  imageMode(CENTER);
+  clear();
+  car.drive();	
+	push();
+	fill(217);
+  pop();
+  street.display();
+}
 
-    ellipse(mouseX, mouseY, 80, 80);
+function keyPressed() {
+  if (keyCode === LEFT_ARROW && car.lane > 1) {
+    car.moveLeft();
+  } 
+
+  if (keyCode === RIGHT_ARROW && car.lane < street.lanes) {
+    car.moveRight();
+  }
 }
