@@ -183,7 +183,7 @@ function displayObstacles() {
         }
         History.push({
             "timestamp": Date.now(),
-            "object": current 
+            "object": Obstacles[i].item
     })
         inventory.addItem(Obstacles[i].item)
         consumption = inventory.getConsumption();
