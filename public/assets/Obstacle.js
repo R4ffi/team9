@@ -19,6 +19,7 @@ class Obstacle {
     image(this.item.image, this.pos.x, this.pos.y, this.size, this.size);
     rectMode(CENTER);
     let imagesize = this.canvasHeight/4;
+    rect((this.canvasWidth / 2 + 5 * this.laneWidth)+20,this.canvasHeight-imagesize*2.4, imagesize, imagesize);
     image(this.item.image,(this.canvasWidth / 2 + 5 * this.laneWidth)+20, this.canvasHeight-imagesize*2.4, imagesize, imagesize);
     pop();
   }
