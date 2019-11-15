@@ -63,7 +63,7 @@ class Inventory {
     displayLiving() {
         push();
         stroke(130, 68, 147);
-        strokeWeight(3);
+        strokeWeight(10);
         rect(this.itemSpace, this.itemSpace, this.itemSize, this.itemSize);
         image(this.Living.image, this.itemSpace, this.itemSpace, this.itemSize, this.itemSize);
         pop();
@@ -72,7 +72,7 @@ class Inventory {
     displayCar() {
         push();
         stroke(240, 133, 135);
-        strokeWeight(3);
+        strokeWeight(10);
         rect(this.itemSize + 2 * this.itemSpace, this.itemSpace, this.itemSize, this.itemSize);
         image(this.Car.image, this.itemSize + 2 * this.itemSpace, this.itemSpace, this.itemSize, this.itemSize);
         pop();
@@ -81,7 +81,7 @@ class Inventory {
     displayHoliday() {
         push();
         stroke(41, 109, 181);
-        strokeWeight(3);
+        strokeWeight(10);
         rect(2 * this.itemSize + 3 * this.itemSpace, this.itemSpace, this.itemSize, this.itemSize);
         image(this.Holiday.image, 2 * this.itemSize + 3 * this.itemSpace, this.itemSpace, this.itemSize, this.itemSize);
         pop();
@@ -90,7 +90,7 @@ class Inventory {
     displayEnergyPackage() {
         push();
         stroke(93, 167, 221);
-        strokeWeight(3);
+        strokeWeight(10);
         rect(this.itemSpace, this.itemSize + 2 * this.itemSpace, this.itemSize, this.itemSize);
         image(this.EnergyPackage.image, this.itemSpace, this.itemSize + 2 * this.itemSpace, this.itemSize, this.itemSize);
         pop();
@@ -99,7 +99,7 @@ class Inventory {
     displayEnergyGenerator() {
         push();
         stroke(95, 187, 158);
-        strokeWeight(3);
+        strokeWeight(10);
         rect(this.itemSize + 2 * this.itemSpace, this.itemSize + 2 * this.itemSpace, this.itemSize, this.itemSize);
         image(this.EnergyGenerator.image, this.itemSize + 2 * this.itemSpace, this.itemSize + 2 * this.itemSpace, this.itemSize, this.itemSize);
         pop();
@@ -112,8 +112,7 @@ class Inventory {
         consumption += this.Holiday.consumption;
         consumption += this.EnergyPackage.consumption;
         consumption += this.EnergyGenerator.consumption;
-        return consumption / 5;
-
+        return consumption;
     }
 
     loadInitImg() {

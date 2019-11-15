@@ -13,7 +13,7 @@ class Obstacle {
 
   display(){
     push();
-    strokeWeight(5);
+    strokeWeight(10);
     stroke(this.item.type.r, this.item.type.g, this.item.type.b);
     rect(this.pos.x, this.pos.y, this.size, this.size);
     image(this.item.image, this.pos.x, this.pos.y, this.size, this.size);
