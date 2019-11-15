@@ -12,6 +12,7 @@ let Obstacles;
 let cars;
 var speed = 5;
 let streetBackground;
+let distance; 
 
 let Categories = [
     {
@@ -47,6 +48,7 @@ function preload() {
 }
 
 function setup() {
+    let rightSideOfStreet = canvasWidth / 2 + 5* laneWidth; 
     placeObstacle(1);
     car = new Car(canvasWidth, canvasHeight, laneWidth, cars["viper"]);
     var canvas = createCanvas(canvasWidth, canvasHeight);
@@ -55,6 +57,8 @@ function setup() {
     particleAnimator = new ParticleAnimator(particleTexture, car);
     fuel = new Fuel(canvasWidth, canvasHeight, maxFuel)
     inventory = new Inventory(canvasWidth, canvasHeight, 40, 60)
+
+    distance = new Distance(canvasWidth, canvasHeight, rightSideOfStreet , canvasHeight - 100, canvasWidth - rightSideOfStreet, 100)
 }
 
 function draw() {
@@ -70,6 +74,7 @@ function draw() {
     displayObstacles();
     fuel.display();
     inventory.display();
+    distance.display();
 }
 
 
