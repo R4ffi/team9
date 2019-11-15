@@ -1,4 +1,4 @@
-let car;
+var car;
 let carImage;
 let street;
 let canvasWidth = 800;
@@ -75,6 +75,17 @@ function setup() {
     happySoundEffect.setVolume(0.3);
     sadTrombone.setVolume(0.5);
     finishingSound.setVolume(0.5);
+
+//for mobile
+    var options = {
+        preventDefault: true
+      };
+    var hammer = new Hammer(document.body, options);
+    hammer.get('swipe').set({
+      direction: Hammer.DIRECTION_ALL
+    });
+    hammer.on("swipe", swiped);
+
 }
 
 function draw() {
@@ -114,8 +125,8 @@ function draw() {
     fill(100);
     textSize(20);
     textFont('consolas');
-    text("Consumption: "+consumption, canvasWidth - canvasWidth / 5, 20)
- 
+    text("Consumption: " + consumption, canvasWidth - canvasWidth / 5, 20)
+
     pop();
     distance.display();
     if (count / framerate > 5) {
@@ -128,22 +139,29 @@ function draw() {
 }
 
 
-function keyPressed() {
-    if (keyCode === LEFT_ARROW && car.lane > 1) {
+function left(){
+    
         car.moveLeft();
         particleAnimator.move();
-    }
+}
+function right(){
+    car.moveRight();
+    particleAnimator.move();  
+}
+function keyPressed() {
     if (keyCode === RIGHT_ARROW && car.lane < street.lanes) {
-        car.moveRight();
-        particleAnimator.move();
+        right();
+    }
+    if (keyCode === LEFT_ARROW && car.lane > 1) {
+        left();
     }
 }
 
 function loadCars() {
     var cars = {};
-    $.getJSON("assets/cars/cars.json", function (json) {
+    $.getJSON("assets/cars/cars.json", function(json) {
         console.log(json.cars);
-        $.each(json.cars, function (i, item) {
+        $.each(json.cars, function(i, item) {
             cars[item.name] = loadImage(item.png);
         });
 
@@ -153,10 +171,10 @@ function loadCars() {
 
 function loadObstacles() {
     var obstacles = {};
-    $.getJSON("assets/obstaclePNGs/Obstacles.json", function (json) {
-        $.each(json, function (index, data) {
+    $.getJSON("assets/obstaclePNGs/Obstacles.json", function(json) {
+        $.each(json, function(index, data) {
             obstacles[index] = new Array();
-            $.each(data, function (i, item) {
+            $.each(data, function(i, item) {
                 obstacles[index].push({
                     "png": loadImage(item.png),
                     "consumption": item.consumption
@@ -187,19 +205,19 @@ function displayObstacles() {
         }
         speed += 0.2
         let current = inventory.getCurrentItem(Obstacles[i].item.type)
-        if(current.consumption > Obstacles[i].item.consumption){
-            background(255,0,0,100);
+        if (current.consumption > Obstacles[i].item.consumption) {
+            background(255, 0, 0, 100);
             sadSoundEffect.play();
-        }else if(inventory.getCurrentItem(Obstacles[i].item.type).consumption < Obstacles[i].item.consumption){
-            background(0,255,0,100);
+        } else if (inventory.getCurrentItem(Obstacles[i].item.type).consumption < Obstacles[i].item.consumption) {
+            background(0, 255, 0, 100);
             happySoundEffect.play();
-        }else{
-            background(0,0,255,100);
+        } else {
+            background(0, 0, 255, 100);
         }
         History.push({
             "timestamp": Date.now(),
             "object": Obstacles[i].item
-    })
+        })
         inventory.addItem(Obstacles[i].item)
         consumption = inventory.getConsumption();
         getNewObstacle();
@@ -234,6 +252,22 @@ function setStartObstacle() {
 
 function getWorstObstacle(obstacleArray, categorie) {
     let res = Math.min.apply(Math, obstacleArray.map(function(o) { return o.consumption; }))
-    let worst = obstacleArray.find(function(o){ return o.consumption == res; })
+    let worst = obstacleArray.find(function(o) { return o.consumption == res; })
     return new Item(categorie.type, worst.consumption, worst.png);
+}
+
+function swiped(event) {
+    console.log(event);
+    if (event.direction == 4) {
+     right();
+    } else if (event.direction == 2) {
+      left();
+    }
+  }
+
+function sendDataToReactApp(value) {
+    var element = document.getElementById('transfer-input');
+    element.value = value;
+    $("#transfer-input").change();
+    element.click();
 }
