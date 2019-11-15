@@ -141,19 +141,22 @@ function draw() {
 
 
 function left(){
-    
+    if(car.lane > 1){
         car.moveLeft();
         particleAnimator.move();
+    }      
 }
 function right(){
-    car.moveRight();
-    particleAnimator.move();  
+    if(car.lane < street.lanes){
+        car.moveRight();
+        particleAnimator.move();  
+    }
 }
 function keyPressed() {
-    if (keyCode === RIGHT_ARROW && car.lane < street.lanes) {
+    if (keyCode === RIGHT_ARROW) {
         right();
     }
-    if (keyCode === LEFT_ARROW && car.lane > 1) {
+    if (keyCode === LEFT_ARROW) {
         left();
     }
 }
