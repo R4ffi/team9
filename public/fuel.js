@@ -17,14 +17,12 @@ class Fuel{
         }
     }
 
-    //Schedule all 5 sec. 
     use(consumption) {
         this.additionalFule += consumption;
         if(this.additionalFule < 0) {
             this.currentFuel += this.additionalFule;
             this.additionalFule = 0;
         }
-        console.log(this.currentFuel)
     }
 
     getFuel() {

@@ -7,7 +7,7 @@ class Car {
     this.canvasHeight = canvasHeight;
     this.width = 80;
     this.height = 66;
-    this.pos.y = canvasHeight - (160)
+    this.pos.y = canvasHeight - (80)
     this.lane = 3;
     this.image = image;
     this.ruckelSpeed = 3;
