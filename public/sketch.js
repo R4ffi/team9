@@ -9,6 +9,7 @@ let fuel;
 let inventory;
 let particleAnimator;
 let Obstacles;
+let obstacleImages;
 let cars;
 var speed = 10;
 let consumption = 0;
@@ -47,8 +48,8 @@ function preload() {
     Obstacles = new Array();
     particleTexture = loadImage("assets/particle_texture.png")
     streetBackground = loadImage("assets/street.png")
-    ObstacleImages = loadObstacles();
-    console.log(ObstacleImages)
+    obstacleImages = loadObstacles();
+    console.log(obstacleImages)
     this.itemCount = 0;
 }
 
@@ -63,7 +64,7 @@ function setup() {
     fuel = new Fuel(canvasWidth, canvasHeight, maxFuel)
     inventory = new Inventory(canvasWidth, canvasHeight, 40, 60)
     distance = new Distance(canvasWidth, canvasHeight, rightSideOfStreet , canvasHeight - 100, canvasWidth - rightSideOfStreet, 100)
-
+    setStartObstacle();
 }
 
 function draw() {
@@ -119,7 +120,7 @@ function loadCars() {
 }
 
 function loadObstacles() {
-    var obstacles = {};
+    let obstacles = {};
     $.getJSON("assets/obstaclePNGs/Obstacles.json", function(json) {
         $.each(json, function(index, data) {
             obstacles[index] = new Array();
@@ -153,16 +154,16 @@ function displayObstacles(){
     }
 }
 function placeObstacle(lane){
-    let randomIndex = (Math.round(Math.random() * (ObstacleImages[Categories[itemCount].name].length-1)));
+    let randomIndex = (Math.round(Math.random() * (obstacleImages[Categories[itemCount].name].length-1)));
     this.lastIndex = randomIndex;
-    let item = new Item(Categories[itemCount].type, ObstacleImages[Categories[itemCount].name][randomIndex].consumption, ObstacleImages[Categories[itemCount].name][randomIndex].png);
+    let item = new Item(Categories[itemCount].type, obstacleImages[Categories[itemCount].name][randomIndex].consumption, obstacleImages[Categories[itemCount].name][randomIndex].png);
     Obstacles.push(new Obstacle(lane, canvasWidth, canvasHeight, laneWidth, item));
 }
 
 function getNewObstacle(){
-    let randomIndex = (Math.round(Math.random() * (ObstacleImages[Categories[itemCount].name].length-1)))
+    let randomIndex = (Math.round(Math.random() * (obstacleImages[Categories[itemCount].name].length-1)))
  
-    let item = new Item(Categories[itemCount].type,  ObstacleImages[Categories[itemCount].name][randomIndex].consumption, ObstacleImages[Categories[itemCount].name][randomIndex].png)
+    let item = new Item(Categories[itemCount].type,  obstacleImages[Categories[itemCount].name][randomIndex].consumption, obstacleImages[Categories[itemCount].name][randomIndex].png)
     if(inventory.getCurrentItem(item.type).image == item.image){
         return getNewObstacle();
     }
@@ -170,4 +171,16 @@ function getNewObstacle(){
     let lane = Math.round(Math.random() * (4))+1;
     console.log(lane);
     Obstacles.push(new Obstacle(lane, canvasWidth, canvasHeight, laneWidth, item));
+}
+
+function setStartObstacle() {
+    Categories.forEach(element => {
+        inventory.addItem(getWorstObstacle(obstacleImages[element.name], element));
+    });
+}
+
+function getWorstObstacle(obstacleArray, categorie) {
+    let res = Math.min.apply(Math, obstacleArray.map(function(o) { return o.consumption; }))
+    let worst = obstacleArray.find(function(o){ return o.consumption == res; })
+    return new Item(categorie.type, worst.consumption, worst.png);
 }
