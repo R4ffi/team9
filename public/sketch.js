@@ -41,6 +41,7 @@ let Categories = [
 ]
 
 function preload() {
+    this.lastIndex = -1;
     cars = loadCars();
     Obstacles = new Array();
     particleTexture = loadImage("assets/particle_texture.png")
@@ -151,13 +152,18 @@ function displayObstacles(){
 }
 function placeObstacle(lane){
     let randomIndex = (Math.round(Math.random() * (ObstacleImages[Categories[itemCount].name].length-1)));
+    this.lastIndex = randomIndex;
     let item = new Item(Categories[itemCount].type, ObstacleImages[Categories[itemCount].name][randomIndex].consumption, ObstacleImages[Categories[itemCount].name][randomIndex].png);
     Obstacles.push(new Obstacle(lane, canvasWidth, canvasHeight, laneWidth, item));
 }
 
 function getNewObstacle(){
     let randomIndex = (Math.round(Math.random() * (ObstacleImages[Categories[itemCount].name].length-1)))
+ 
     let item = new Item(Categories[itemCount].type,  ObstacleImages[Categories[itemCount].name][randomIndex].consumption, ObstacleImages[Categories[itemCount].name][randomIndex].png)
+    if(inventory.getCurrentItem(item.type).image == item.image){
+        return getNewObstacle();
+    }
     Obstacles.pop()
     let lane = Math.round(Math.random() * (4))+1;
     console.log(lane);
