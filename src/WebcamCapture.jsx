@@ -18,12 +18,14 @@ const WebcamCapture = () => {
 
   return (<React.Fragment >
     <Webcam audio={false}
-      height={720}
       ref={webcamRef}
       screenshotFormat="image/jpeg"
-      width={1280}
+      width={200}
       videoConstraints={videoConstraints}
-    /> <button onClick={capture} > Capture photo </button>
+    />
+    <button onClick={capture} >
+      Capture photo
+      </button>
   </React.Fragment >
   );
 };

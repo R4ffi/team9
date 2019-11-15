@@ -23,8 +23,10 @@ function preload() {
 function setup() {
 
     placeObstacle(1);
-    createCanvas(canvasWidth, canvasHeight);
     car = new Car(canvasWidth, canvasHeight, laneWidth, cars["viper"]);
+
+    var canvas = createCanvas(canvasWidth, canvasHeight);
+    canvas.parent('game');
     street = new Street(canvasWidth, canvasHeight, laneWidth);
     particleAnimator = new ParticleAnimator(particleTexture, car);
     fuel = new Fuel(canvasWidth, canvasHeight, maxFuel)
@@ -44,6 +46,11 @@ function draw() {
     displayObstacles();
     fuel.display();
     inventory.display();
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 1830ca5341070ee29191ad8e4194aacc47f38b5b
 }
 
 
@@ -58,17 +65,18 @@ function keyPressed() {
     }
 }
 
-function loadCars(){
+function loadCars() {
     var cars = {};
     $.getJSON("assets/cars/cars.json", function(json) {
         console.log(json.cars);
         $.each(json.cars, function(i, item) {
             cars[item.name] = loadImage(item.png);
         });
-        
+
     });
     return cars;
 }
+<<<<<<< HEAD
 function displayObstacles(){
     let i = 0; 
     Obstacles[i].display();
@@ -84,3 +92,16 @@ function placeObstacle(lane){
     Obstacles.push(new Obstacle(lane, canvasHeight, canvasWidth, laneWidth, item));
 }
 
+=======
+
+function displayObstacles() {
+    Obstacles[0].display();
+    if (car.pos.y - Obstacles[0].pos.y < Obstacles[0].size && Obstacles[0].lane == car.lane) {
+        Obstacles[0].pos.y = 0;
+    }
+}
+
+function placeObstacle(lane) {
+    Obstacles.push(new Obstacle(lane, canvasHeight, canvasWidth, laneWidth));
+}
+>>>>>>> 1830ca5341070ee29191ad8e4194aacc47f38b5b
