@@ -1,12 +1,10 @@
 class Fuel{
 
-    maxSize = 100; 
     constructor(canvasWidth, canvasHeight, maxFuel) {
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
         this.maxFuel = maxFuel; 
         this.currentFuel = maxFuel;
-        this.additionalFule = 0; 
     }
   
     add(fuelToAdd) {
@@ -18,11 +16,7 @@ class Fuel{
     }
 
     use(consumption) {
-        this.additionalFule += consumption;
-        if(this.additionalFule < 0) {
-            this.currentFuel += this.additionalFule;
-            this.additionalFule = 0;
-        }
+            this.currentFuel += consumption
     }
 
     getFuel() {
@@ -30,35 +24,29 @@ class Fuel{
     }
 
     display() {
-        if(this.currentFuel <= 0)
-            return;
-      
-        var bla = 10;
-        var blu = this.canvasHeight - (this.maxSize / this.maxFuel * this.currentFuel);
-        
+        push();
+        if(this.currentFuel <= 0){
+            this.currentFuel = 0;
+        }
+        let offsetY = 45;
+        let offsetX = 40;
         push();
         fill(0,0,0,0);
-        rect(10,this.canvasHeight - this.maxSize, 15, this.maxSize);
+        rect(offsetX,this.canvasHeight - this.maxFuel - offsetY, 15, this.maxFuel*2);
         pop();
         push();
         fill(0,255,0);
+     
         stroke(0, 0, 0);
-        rect(bla, blu, 15, this.maxSize / this.maxFuel * this.currentFuel);
+        rect(offsetX,this.canvasHeight - (this.currentFuel) - offsetY, 15, this.currentFuel*2);
         
         pop();
         push();
         fill(100);
-        textSize(25);
+        textSize(20);
+        textFont('consolas');
         text("Fuel:"+Math.round(this.currentFuel), 10, this.canvasHeight-10);    
         pop();
-        if(this.additionalFule > 0)
-        {
-            push();
-            fill(0,0,0);
-            stroke(0, 0, 0);
-
-            rect(10, this.canvasHeight - this.maxSize - (this.maxSize / this.maxFuel * this.additionalFule), 15 , this.maxSize / this.maxFuel * this.additionalFule);
-            pop();
-        }
+        pop();
     }
   }

@@ -19,6 +19,7 @@ class Distance {
     display() {
         push();
         textSize(20);
+        textFont('consolas');
         fill(232,128,15);
         text(this.text + Math.round(this.kilometersToGo) + " KM", this.posX, this.posY, this.canvasWidth - this.posX, this.canvasHeight - this.posY);
         pop();
