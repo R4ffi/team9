@@ -9,10 +9,10 @@ class Distance {
         this.sizeY = sizeY;
     }
 
-    kilometersToGo = 500;
+    kilometersToGo = maxDistance;
     text  = "Stade de Suisse: ";
 
-    distanceTraveld(distance) {
+    distanceTraveled(distance) {
         this.kilometersToGo -= distance;
     }
 
