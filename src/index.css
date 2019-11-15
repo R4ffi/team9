@@ -12,12 +12,31 @@ code {
     monospace;
 }
 
+/* Header/logo Title */
+.header {
+  padding: 20px;
+  text-align: center;
+  background: #E8800F;
+  color: white;
+}
+
+.App{
+  background:#E8800F;
+}
+
 .gameDiv {
+  margin: 2px;
   display: inline-block;
-  background: #cfc;
 }
 
 .camDiv {
+  margin: 2px;
   display: inline-block;
-  background: #ffc;
+}
+
+/* Footer */
+.footer {
+  padding: 20px;
+  text-align: center;
+  background: #E8800F;
 }
