@@ -30,7 +30,7 @@ function App() {
         </div>
         <div className="camDiv">
           <WebcamCapture />
-          <input id="transfer-input" type="text" name="action" value="login" onChange={onChange} onClick={onClick} />
+          <input id="transfer-input" type="hidden" name="action" value="" onChange={onChange} onClick={onClick} />
         </div>
       </div>
       <div className="footer">
