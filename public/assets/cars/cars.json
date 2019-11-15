@@ -1,0 +1,24 @@
+{
+  "cars":[
+    {
+      "name":"audi",
+      "png":"assets/cars/Audi.png"
+    },
+    {
+      "name":"truck",
+      "png":"assets/cars/Mini_truck.png"
+    },
+    {
+      "name":"van",
+      "png":"assets/cars/Mini_van.png"
+    },
+    {
+      "name":"viper",
+      "png":"assets/cars/black_viper.png"
+    },
+    {
+      "name":"taxi",
+      "png":"assets/cars/taxi.png"
+    }
+  ]
+}
