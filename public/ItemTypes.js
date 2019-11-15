@@ -20,9 +20,9 @@ const ItemTypes = {
         b: 158
     },
     ENERGYPACK: {
-        r: 93,
-        g: 167,
-        b: 221
+        r: 232,
+        g: 128,
+        b: 15
     }
 }
 /*
