@@ -90,4 +90,14 @@ class Inventory {
         image(this.EnergyGenerator.image, this.itemSize + 2 * this.itemSpace, this.itemSize + 2 * this.itemSpace, this.itemSize, this.itemSize);
         pop();
     }
+
+    getConsumption(){
+        let consumption = 0;
+        consumption += this.Living.consumption;
+        this.Car;
+        this.Holiday;
+        this.EnergyPackage;
+        this.EnergyGenerator;
+    
+    }
 }

@@ -10,7 +10,7 @@ let inventory;
 let particleAnimator;
 let Obstacles;
 let cars;
-var speed = 5;
+var speed = 10;
 let streetBackground;
 
 let Categories = [
@@ -49,7 +49,7 @@ function preload() {
 function setup() {
     placeObstacle(1);
     car = new Car(canvasWidth, canvasHeight, laneWidth, cars["viper"]);
-    var canvas = createCanvas(canvasWidth, canvasHeight);
+    let canvas = createCanvas(canvasWidth, canvasHeight);
     canvas.parent('game');
     street = new Street(canvasWidth, canvasHeight, laneWidth, streetBackground);
     particleAnimator = new ParticleAnimator(particleTexture, car);
@@ -58,10 +58,10 @@ function setup() {
 }
 
 function draw() {
+    clear();
     frameRate(30);
     imageMode(CENTER);
     rectMode(CENTER);
-    clear();
     street.display();
     car.display();
     push();
@@ -126,6 +126,6 @@ function displayObstacles(){
     }
 }
 function placeObstacle(lane){
-    let item = new Item(ItemTypes.CAR, -10, cars["taxi"])
+    let item = new Item(Categories[itemCount].type, -15, ObstacleImages[Categories[itemCount].name][(Math.round(Math.random() * (ObstacleImages[Categories[itemCount].name].length-1)))]);
     Obstacles.push(new Obstacle(lane, canvasHeight, canvasWidth, laneWidth, item));
 }
