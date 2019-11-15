@@ -54,6 +54,8 @@ function preload() {
     soundFormats('mp3', 'ogg');
     sadSoundEffect = loadSound('assets/soundEffects/Punch.mp3');
     happySoundEffect = loadSound('assets/soundEffects/SuccessSoundEffect.mp3');
+    sadTrombone = loadSound('assets/soundEffects/SadTrombone.mp3');
+    finishingSound = loadSound('assets/soundEffects/finishingSound.mp3');
     History = new Array();
 }
 
@@ -69,7 +71,11 @@ function setup() {
     inventory = new Inventory(canvasWidth, canvasHeight, 40, 60)
     setStartObstacle();
     distance = new Distance(canvasWidth, canvasHeight, rightSideOfStreet, canvasHeight - 100, canvasWidth - rightSideOfStreet, 100);
-    //for mobile
+
+    sadSoundEffect.setVolume(0.3);
+    happySoundEffect.setVolume(0.3);
+    sadTrombone.setVolume(0.5);
+    finishingSound.setVolume(0.5);
     var options = {
         preventDefault: true
       };
@@ -78,15 +84,13 @@ function setup() {
       direction: Hammer.DIRECTION_ALL
     });
     hammer.on("swipe", swiped);
-    //
 
-    sadSoundEffect.setVolume(0.5);
-    happySoundEffect.setVolume(0.5);
 }
 
 function draw() {
     clear();
     if (fuel.currentFuel <= 0) {
+        sadTrombone.play()
         push();
         fuel.display();
         pop();
@@ -95,11 +99,14 @@ function draw() {
         textAlign(CENTER, CENTER);
         text("FAILED", canvasWidth / 2, canvasHeight / 2);
         pop();
+        sadTrombone.stop();
         return;
     } else if (distance.kilometersToGo <= 0) {
+        finishingSound.play();
         textSize(50);
         textAlign(CENTER, CENTER);
         text("Juhuu, you are in bern!", canvasWidth / 2, canvasHeight / 2);
+        finishingSound.stop();
         return;
     }
     frameRate(framerate);

@@ -26,15 +26,8 @@ function App() {
       </div>
       <div className="row">
         <div className="gameDiv">
-<<<<<<< HEAD
           <div id="game"></div>
-          <center>
-            <button id="left">LEFT--</button>
-            <button id="right">--></button>
-        </center>
-=======
           {isGameVisible && <div id="game"></div>}
->>>>>>> ecb474c751a9fde48888795c15161676d8d7fd63
         </div>
         
         <div className="camDiv">
