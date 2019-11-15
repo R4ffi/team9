@@ -1,9 +1,9 @@
-let car;
+var car;
 let carImage;
 let street;
-let canvasWidth = 800;
+let canvasWidth;
 let laneWidth = 60;
-let canvasHeight = 600;
+let canvasHeight;
 let maxFuel = 50;
 let fuel;
 let inventory;
@@ -54,10 +54,14 @@ function preload() {
     soundFormats('mp3', 'ogg');
     sadSoundEffect = loadSound('assets/soundEffects/Punch.mp3');
     happySoundEffect = loadSound('assets/soundEffects/SuccessSoundEffect.mp3');
+    sadTrombone = loadSound('assets/soundEffects/SadTrombone.mp3');
+    finishingSound = loadSound('assets/soundEffects/finishingSound.mp3');
     History = new Array();
 }
 
 function setup() {
+    canvasHeight = displayHeight*0.5;
+    canvasWidth = displayWidth*0.8;
     let rightSideOfStreet = canvasWidth / 2 + 5 * laneWidth;
     placeObstacle(1);
     car = new Car(canvasWidth, canvasHeight, laneWidth, cars["viper"]);
@@ -69,13 +73,26 @@ function setup() {
     inventory = new Inventory(canvasWidth, canvasHeight, 40, 60)
     setStartObstacle();
     distance = new Distance(canvasWidth, canvasHeight, rightSideOfStreet, canvasHeight - 100, canvasWidth - rightSideOfStreet, 100);
-    sadSoundEffect.setVolume(0.5);
-    happySoundEffect.setVolume(0.5);
+
+    sadSoundEffect.setVolume(0.3);
+    happySoundEffect.setVolume(0.3);
+    sadTrombone.setVolume(0.5);
+    finishingSound.setVolume(0.5);
+    var options = {
+        preventDefault: true
+      };
+    var hammer = new Hammer(document.body, options);
+    hammer.get('swipe').set({
+      direction: Hammer.DIRECTION_ALL
+    });
+    hammer.on("swipe", swiped);
+
 }
 
 function draw() {
     clear();
     if (fuel.currentFuel <= 0) {
+        sadTrombone.play()
         push();
         fuel.display();
         pop();
@@ -84,11 +101,14 @@ function draw() {
         textAlign(CENTER, CENTER);
         text("FAILED", canvasWidth / 2, canvasHeight / 2);
         pop();
+        sadTrombone.stop();
         return;
     } else if (distance.kilometersToGo <= 0) {
+        finishingSound.play();
         textSize(50);
         textAlign(CENTER, CENTER);
         text("Juhuu, you are in bern!", canvasWidth / 2, canvasHeight / 2);
+        finishingSound.stop();
         return;
     }
     frameRate(framerate);
@@ -120,14 +140,21 @@ function draw() {
 }
 
 
-function keyPressed() {
-    if (keyCode === LEFT_ARROW && car.lane > 1) {
+function left(){
+    
         car.moveLeft();
         particleAnimator.move();
-    }
+}
+function right(){
+    car.moveRight();
+    particleAnimator.move();  
+}
+function keyPressed() {
     if (keyCode === RIGHT_ARROW && car.lane < street.lanes) {
-        car.moveRight();
-        particleAnimator.move();
+        right();
+    }
+    if (keyCode === LEFT_ARROW && car.lane > 1) {
+        left();
     }
 }
 
@@ -229,6 +256,15 @@ function getWorstObstacle(obstacleArray, categorie) {
     let worst = obstacleArray.find(function(o) { return o.consumption == res; })
     return new Item(categorie.type, worst.consumption, worst.png);
 }
+
+function swiped(event) {
+    console.log(event);
+    if (event.direction == 4) {
+     right();
+    } else if (event.direction == 2) {
+      left();
+    }
+  }
 
 function sendDataToReactApp(value) {
     var element = document.getElementById('transfer-input');

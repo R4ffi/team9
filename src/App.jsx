@@ -28,6 +28,7 @@ function App() {
         <div className="gameDiv">
           {isGameVisible && <div id="game"></div>}
         </div>
+        
         <div className="camDiv">
           <WebcamCapture />
           <input id="transfer-input" type="hidden" name="action" value="" onChange={onChange} onClick={onClick} />
