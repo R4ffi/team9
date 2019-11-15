@@ -118,11 +118,11 @@ function displayObstacles(){
             itemCount = 0;
         }
         inventory.addItem(Obstacles[i].item)
-        console.log(Categories[itemCount]);
-        console.log(Math.round(Math.random() * ObstacleImages[Categories[itemCount].name].length));
         let item = new Item(Categories[itemCount].type, -15, ObstacleImages[Categories[itemCount].name][(Math.round(Math.random() * (ObstacleImages[Categories[itemCount].name].length-1)))])
         Obstacles.pop()
-        Obstacles.push(new Obstacle(2, canvasHeight, canvasWidth, laneWidth, item));
+        let lane = Math.round(Math.random() * (4))+1;
+        console.log(lane);
+        Obstacles.push(new Obstacle(lane, canvasHeight, canvasWidth, laneWidth, item));
     }
 }
 function placeObstacle(lane){
