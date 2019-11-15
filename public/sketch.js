@@ -65,20 +65,23 @@ function setup() {
 }
 
 function draw() {
+    clear();
     if (fuel.currentFuel <= 0) {
+        push();
         fuel.display();
+        pop();
+        push();
         textSize(50);
         textAlign(CENTER, CENTER);
         text("FAILED", canvasWidth / 2, canvasHeight / 2);
+        pop();
         return;
     } else if (distance.kilometersToGo <= 0) {
-        clear();
         textSize(50);
         textAlign(CENTER, CENTER);
         text("Juhuu, you are in bern!", canvasWidth / 2, canvasHeight / 2);
         return;
     }
-    clear();
     frameRate(framerate);
     imageMode(CENTER);
     rectMode(CENTER);
@@ -92,8 +95,10 @@ function draw() {
     inventory.display();
     push()
     fill(100);
-    textSize(15);
-    text("Consumption: " + consumption, canvasWidth - canvasWidth / 5, 20)
+    textSize(20);
+    textFont('consolas');
+    text("Consumption: "+consumption, canvasWidth - canvasWidth / 5, 20)
+ 
     pop();
     distance.display();
     if (count / framerate > 5) {
