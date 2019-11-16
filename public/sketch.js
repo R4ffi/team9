@@ -20,6 +20,7 @@ let count = 0;
 let maxDistance = 100;
 let gameHistory;
 let isDone = true;
+let isPreStart = true;
 let button;
 
 let Categories = [{
@@ -71,7 +72,7 @@ function setup() {
     console.log(diff);
     let rightSideOfStreet = canvasWidth / 2 + diff * laneWidth;
     placeObstacle(1);
-    car = new Car(canvasWidth, canvasHeight, laneWidth, cars["viper"]);
+    car = new Car(canvasWidth, canvasHeight, laneWidth, cars["truck"]);
     let canvas = createCanvas(canvasWidth, canvasHeight);
     canvas.parent('game');
     street = new Street(canvasWidth, canvasHeight, laneWidth, streetBackground);
@@ -111,7 +112,12 @@ function start(){
     isDone = false;
 }
 function draw() {
-    if (isDone) {
+    if (isPreStart) {
+        drawStartScreen();
+        return
+    }
+    if(isDone){
+        displayInventory();
         return
     }
     button.hide();
@@ -128,7 +134,7 @@ function draw() {
         text("FAILED", canvasWidth / 2, canvasHeight / 2);
         sendDataToReactApp(gameHistory);
         pop();
-        createDiv('<center><div onclick="OverlayOff()" id="overlay"><div id="text"><p>Ui, das het ned glängt! Kontaktier D\'EWB für hiuf!<br><a href="https://www.ewb.ch" target="_blank">EWB (Professionelli Hiuf)<a></p></div></div></center>');
+        createDiv('<center><div onclick="OverlayOff()" id="overlay"><div id="text"><p>Ui, das het ned glängt! Kontaktier D\'EWB für hiuf!<br><a href="https://www.ewb.ch" target="_blank">Klick Hie!<a></p></div></div></center>');
         document.getElementById("overlay").style.display = "block";
         isDone = true
         return;
@@ -176,6 +182,7 @@ function draw() {
 
 
 function OverlayOff() {
+    isPreStart = false;
     document.getElementById("overlay").style.display = "none";
   }
 
@@ -230,7 +237,20 @@ function loadObstacles() {
     });
     return obstacles;
 }
+function setNewCar(item){
+    if(item.type == ItemTypes.CAR){
+        if(item.imagePath.includes("tesla")){
+            car.image = cars["audi"]
+        }else if (item.imagePath.includes("porsche")){
+            car.image = cars["viper"]
+        }else if(item.imagePath.includes("dodge")){
+            car.image = cars["truck"]
+        }else{
+            car.image = item.image;
+        }
+    }
 
+}
 function displayObstacles() {
     let i = 0;
     Obstacles[i].display();
@@ -245,10 +265,12 @@ function displayObstacles() {
     }
 
     if (car.pos.y - Obstacles[i].pos.y < Obstacles[i].size && Obstacles[i].lane == car.lane) {
+        setNewCar(Obstacles[i].item);
         this.itemCount++;
         if (itemCount == 5) {
             itemCount = 0;
         }
+        
         speed += 0.2
         let current = inventory.getCurrentItem(Obstacles[i].item.type)
         if (current.consumption > Obstacles[i].item.consumption) {
@@ -299,7 +321,7 @@ function setStartObstacle() {
 function getWorstObstacle(obstacleArray, categorie) {
     let res = Math.min.apply(Math, obstacleArray.map(function(o) { return o.consumption; }))
     let worst = obstacleArray.find(function(o) { return o.consumption == res; })
-    return new Item(categorie.type, worst.consumption, worst.png);
+    return new Item(categorie.type, worst.consumption, worst.png, worst.path);
 }
 
 function swiped(event) {
@@ -315,4 +337,43 @@ function sendDataToReactApp(value) {
     var element = document.getElementById('transfer-input');
     element.value = JSON.stringify(value);
     element.click();
+}
+
+function drawStartScreen(){
+    createDiv('<center><div onclick="OverlayOff()" id="overlay"><div id="text"><p>Willkommen bei der EWB Challenge!</p><p>Reduziere dein Energieverbruch, bis es dir ins Stadion reicht!</p></div></div></center>');
+    document.getElementById("overlay").style.display = "block";
+}
+
+function displayInventory(){
+    push();
+    textAlign(CENTER,CENTER);
+    imageMode(CENTER);
+    let itemsize = 100;
+    let index = 0;
+    let spacing = 10;
+    textSize(25);
+    textFont('consolas');
+    text("Dein Startinventar:", canvasWidth/2, canvasHeight/3)
+    pop();
+    push();
+    textAlign(CENTER,CENTER);
+    imageMode(CENTER);
+    textFont('consolas');
+    Categories.forEach(element => {
+        index++;
+        let item = inventory.getCurrentItem(element.type);
+        let currentX = (canvasWidth/2-(3*itemsize + 3*spacing)) + (index*itemsize);
+        let pictureY = canvasHeight/3+ itemsize;
+        let imageName = item.imagePath.split("/")[item.imagePath.split("/").length-1].split('.')[0];
+        text(item.type.name+":", currentX, pictureY - itemsize/1.4);
+        text(imageName, currentX, pictureY - itemsize/1.8);
+        image(item.image, currentX, pictureY, itemsize-spacing, itemsize-spacing);
+        if(item.consumption < 0){
+            text("Verbraucht:"+item.consumption * -1, currentX, pictureY+itemsize/1.8)
+        }else{
+            text("Generiert:"+item.consumption, currentX, pictureY+itemsize/1.8)
+        }
+        
+    });
+    pop();
 }
