@@ -21,7 +21,7 @@ function App() {
       <div className="navbar">
         <a href="#" className="active">Home</a>
         <a href="#">Link</a>
-        <a href="#">Link</a>
+        <a href="javascript:window.location.reload(true)">Restart</a>
         <a href="#" className="right">Link</a>
       </div>
       <div className="row">

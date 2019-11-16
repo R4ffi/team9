@@ -119,7 +119,6 @@ function draw() {
         imageMode(CENTER);
         rectMode(CENTER);
         image(this.ybMeisterfeier, canvasWidth / 2, canvasHeight / 2);
-        finishingSound.stop();
         return;
     }
     frameRate(framerate);
