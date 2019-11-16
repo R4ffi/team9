@@ -371,7 +371,7 @@ function sendDataToReactApp(value) {
 }
 
 function drawStartScreen(){
-    createDiv('<center><div onclick="OverlayOff()" id="overlay"><div id="text"><p>Willkommen bei der EWB Challenge!</p><p>Reduziere dein Energieverbruch, bis es dir ins Stadion reicht!</p></div></div></center>');
+    createDiv('<center><div onclick="OverlayOff()" id="overlay"><div id="text"><p>Willkommen bei der EWB Challenge!</p><p>Reduziere dein Energieverbrauch, damit es dir ins Stadion reicht!</p></div></div></center>');
     document.getElementById("overlay").style.display = "block";
 }
 
