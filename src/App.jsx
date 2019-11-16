@@ -30,12 +30,11 @@ function App() {
     <div className="App">
       <div className="header">
         <h1>ewb - energy with b...</h1>
-        <p>This is a game.</p>
+        {/* <p>This is a game.</p> */}
       </div>
       <div className="navbar">
         <a href="#" className="active">Home</a>
-        <a href="#">Link</a>
-        <a href="javascript:window.location.reload(true)">Restart</a>
+        <a href="javascript:window.location.reload(true)">Retry</a>
         <a href="#" className="right">Link</a>
       </div>
       <div className="row">

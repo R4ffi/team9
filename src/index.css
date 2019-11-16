@@ -14,10 +14,18 @@ code {
 
 /* Header/logo Title */
 .header {
-  padding: 20px;
+  padding: 5px;
   text-align: center;
   background: #E8800F;
   color: white;
+}
+
+.smiley {
+  display: inline-block;
+  padding: 5px;
+  text-align: center;
+  margin-left: 5px !important;
+  margin-right: 5px !important;
 }
 
 .App{

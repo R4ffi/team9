@@ -69,14 +69,14 @@ const WebcamCapture = ({ onAddEmotion }) => {
   return (<React.Fragment >
     <div style={{ width: '100%', overflow: 'hidden', textAlign: 'center' }}>
       <div style={{ overflow: 'hidden' }}>
-        <div style={{ width: '300px', float: 'left', textAlign: 'right' }}>  <Webcam audio={false}
+        <div className="smiley" >  <Webcam audio={false}
           ref={webcamRef}
           screenshotFormat="image/jpeg"
           height={145}
           videoConstraints={videoConstraints}
         /> </div>
-        <div style={{ textAlign: 'left' }} >
-          {emotion !== '' && <React.Fragment><div>{emotion}</div> <img src={`assets/emotions/${emotion}.png`} alt={emotion} /></React.Fragment>}
+        <div className="smiley" style={{ width: '120px' }}>
+          {emotion !== '' && <React.Fragment> <img src={`assets/emotions/${emotion}.png`}  alt={emotion} /></React.Fragment>} <div>{emotion}</div>
         </div>
       </div>
     </div>

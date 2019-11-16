@@ -115,10 +115,13 @@ function draw() {
         pop();
         push();
         textSize(50);
+        textFont('consolas');
         textAlign(CENTER, CENTER);
         text("FAILED", canvasWidth / 2, canvasHeight / 2);
         sendDataToReactApp(gameHistory);
         pop();
+        createDiv('<center><div onclick="OverlayOff()" id="overlay"><div id="text"><p>Ui, das het ned glängt! Kontaktier D\'EWB für hiuf!<br><a href="https://www.ewb.ch" target="_blank">EWB (Professionelli Hiuf)<a></p></div></div></center>');
+        document.getElementById("overlay").style.display = "block";
         isDone = true
         return;
     } else if (distance.kilometersToGo <= 0) {
@@ -127,9 +130,12 @@ function draw() {
         textAlign(CENTER, CENTER);
         text("Juhuu, you are in bern!", canvasWidth / 2, canvasHeight / 2);
         isDone = true
+            //textSize(50);
+            //textAlign(CENTER, CENTER);
+            //text("Juhuu, you are in bern!", canvasWidth / 2, canvasHeight / 2);
         imageMode(CENTER);
         rectMode(CENTER);
-        image(this.ybMeisterfeier, canvasWidth / 2, canvasHeight / 2, canvasHeight * 1.4731, canvasHeight);
+        image(this.ybMeisterfeier, canvasWidth / 2, canvasHeight / 2);
         return;
     }
     frameRate(framerate);
@@ -160,6 +166,10 @@ function draw() {
     count++;
 }
 
+
+function OverlayOff() {
+    document.getElementById("overlay").style.display = "none";
+  }
 
 function left() {
     if (car.lane > 1) {
@@ -262,7 +272,7 @@ function placeObstacle(lane) {
 function getNewObstacle() {
     let randomIndex = (Math.round(Math.random() * (obstacleImages[Categories[itemCount].name].length - 1)))
 
-    let item = new Item(Categories[itemCount].type, obstacleImages[Categories[itemCount].name][randomIndex].consumption, obstacleImages[Categories[itemCount].name][randomIndex].png)
+    let item = new Item(Categories[itemCount].type, obstacleImages[Categories[itemCount].name][randomIndex].consumption, obstacleImages[Categories[itemCount].name][randomIndex].png, obstacleImages[Categories[itemCount].name][randomIndex].path)
     if (inventory.getCurrentItem(item.type).image == item.image) {
         return getNewObstacle();
     }
