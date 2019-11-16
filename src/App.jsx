@@ -31,7 +31,7 @@ function App() {
   return (
     <div className="App">
       <div className="header">
-        <h1>ewb - energy with b...</h1>
+        <h1>ewb - Grand Theft Energy</h1>
         {/* <p>This is a game.</p> */}
       </div>
       <div className="navbar">
