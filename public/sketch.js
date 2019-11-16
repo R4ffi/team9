@@ -22,6 +22,7 @@ let gameHistory;
 let isDone = true;
 let isPreStart = true;
 let button;
+let isBetter = true;
 
 let Categories = [{
         "name": "beziehen",
@@ -103,7 +104,7 @@ function setup() {
     button.style('text-decoration', 'none');
     button.style('display', 'inline-block');
     button.style('font-size', '16px');
-    button.position(displayWidth/2, displayHeight/2);
+    button.position(displayWidth/2-80, displayHeight/2);
     button.mousePressed(start); 
    
 }
@@ -134,7 +135,7 @@ function draw() {
         text("FAILED", canvasWidth / 2, canvasHeight / 2);
         sendDataToReactApp(gameHistory);
         pop();
-        createDiv('<center><div onclick="OverlayOff()" id="overlay"><div id="text"><p>Ui, das het ned glängt! Kontaktier D\'EWB für hiuf!<br><a href="https://www.ewb.ch" target="_blank">Klick Hie!<a></p></div></div></center>');
+        document.getElementById("overlay").outerHTML = ('<center><div onclick="OverlayOff()" id="overlay"><div id="text"><p>Ui, das het ned glängt! Kontaktier D\'EWB für hiuf!<br><a href="https://www.ewb.ch" target="_blank">Klick Hie!<a></p></div></div></center>');
         document.getElementById("overlay").style.display = "block";
         isDone = true
         return;
@@ -178,6 +179,7 @@ function draw() {
         count = 0;
     }
     count++;
+
 }
 
 
@@ -243,7 +245,7 @@ function setNewCar(item){
             car.image = cars["audi"]
         }else if (item.imagePath.includes("porsche")){
             car.image = cars["viper"]
-        }else if(item.imagePath.includes("dodge")){
+        }else if(item.imagePath.includes("Dodge")){
             car.image = cars["truck"]
         }else{
             car.image = item.image;
@@ -308,7 +310,10 @@ function getNewObstacle() {
     }
     Obstacles.pop()
     let lane = Math.round(Math.random() * (4)) + 1;
-    Obstacles.push(new Obstacle(lane, canvasWidth, canvasHeight, laneWidth, item));
+    let newObstacle = new Obstacle(lane, canvasWidth, canvasHeight, laneWidth, item);
+    isBetter = item.consumption > inventory.getCurrentItem(item.type).consumption
+    console.log(isBetter);
+    Obstacles.push(newObstacle);
 }
 
 function setStartObstacle() {
