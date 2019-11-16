@@ -6,23 +6,23 @@
     },
     {
       "name":"truck",
-      "png":"assets/cars/Mini_truck.png"
+      "png":"assets/cars/Mini_truck2.png"
     },
     {
       "name":"van",
       "png":"assets/cars/Mini_van.png"
     },
     {
-      "name":"viper",
-      "png":"assets/cars/black_viper.png"
+      "name":"porsche",
+      "png":"assets/cars/porsche.png"
     },
     {
-      "name":"taxi",
-      "png":"assets/cars/taxi.png"
+      "name":"zoe",
+      "png":"assets/cars/zoe.png"
     },
     {
       "name":"smart",
-      "png":"assets/cars/smart.png"
+      "png":"assets/cars/smart2.png"
     }
   ]
 }

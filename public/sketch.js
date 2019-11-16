@@ -270,11 +270,13 @@ function setNewCar(item) {
     if (item.type == ItemTypes.CAR) {
         if (item.imagePath.includes("tesla")) {
             car.image = cars["audi"]
-        } else if (item.imagePath.includes("porsche")) {
-            car.image = cars["viper"]
-        } else if (item.imagePath.includes("Dodge")) {
+        }else if (item.imagePath.includes("Porsche") || item.imagePath.includes("porsche")){
+            car.image = cars["porsche"]
+        }else if(item.imagePath.includes("Dodge")){
             car.image = cars["truck"]
-        } else {
+        }else if(item.imagePath.includes("Zoe") || item.imagePath.includes("zoe")){
+            car.image = cars["zoe"]
+        }else{
             car.image = cars["smart"];
         }
     }
@@ -391,8 +393,8 @@ function sendDataToReactApp(value) {
     element.click();
 }
 
-function drawStartScreen() {
-    createDiv('<center><div onclick="OverlayOff()" id="overlay"><div id="text"><p>Willkommen bei der EWB Challenge!</p><p>Reduziere dein Energieverbruch, bis es dir ins Stadion reicht!</p></div></div></center>');
+function drawStartScreen(){
+    createDiv('<center><div onclick="OverlayOff()" id="overlay"><div id="text"><p>Willkommen bei der EWB Challenge!</p><p>Reduziere dein Energieverbrauch, damit es dir ins Stadion reicht!</p></div></div></center>');
     document.getElementById("overlay").style.display = "block";
 }
 
