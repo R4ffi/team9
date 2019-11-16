@@ -245,10 +245,11 @@ function loadObstacles() {
 }
 function setNewCar(item){
     if(item.type == ItemTypes.CAR){
-        if(item.imagePath.includes("tesla")){
+        console.log(item.imagePath)
+        if(item.imagePath.includes("tesla") || item.imagePath.includes("Tesla")){
             car.image = cars["audi"]
-        }else if (item.imagePath.includes("porsche")){
-            car.image = cars["viper"]
+        }else if (item.imagePath.includes("Porsche") || item.imagePath.includes("porsche")){
+            car.image = cars["porsche"]
         }else if(item.imagePath.includes("Dodge")){
             car.image = cars["truck"]
         }else{
