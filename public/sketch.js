@@ -1,9 +1,9 @@
-let car;
+var car;
 let carImage;
 let street;
-let canvasWidth = 800;
+let canvasWidth;
 let laneWidth = 60;
-let canvasHeight = 600;
+let canvasHeight;
 let maxFuel = 50;
 let fuel;
 let inventory;
@@ -19,6 +19,7 @@ let framerate = 30;
 let count = 0;
 let maxDistance = 100;
 let gameHistory;
+let isDone = false;
 
 let Categories = [{
         "name": "beziehen",
@@ -48,6 +49,7 @@ function preload() {
     Obstacles = new Array();
     particleTexture = loadImage("assets/particle_texture.png")
     streetBackground = loadImage("assets/street.png")
+    ybMeisterfeier = loadImage("assets/yb_meisterfeier.png")
     obstacleImages = loadObstacles();
     console.log(obstacleImages)
     this.itemCount = 0;
@@ -58,6 +60,8 @@ function preload() {
 }
 
 function setup() {
+    canvasHeight = displayHeight*0.5;
+    canvasWidth = displayWidth*0.8;
     let rightSideOfStreet = canvasWidth / 2 + 5 * laneWidth;
     placeObstacle(1);
     car = new Car(canvasWidth, canvasHeight, laneWidth, cars["viper"]);
@@ -69,13 +73,28 @@ function setup() {
     inventory = new Inventory(canvasWidth, canvasHeight, 40, 60)
     setStartObstacle();
     distance = new Distance(canvasWidth, canvasHeight, rightSideOfStreet, canvasHeight - 100, canvasWidth - rightSideOfStreet, 100);
-    sadSoundEffect.setVolume(0.5);
-    happySoundEffect.setVolume(0.5);
+
+    sadSoundEffect.setVolume(0.1);
+    happySoundEffect.setVolume(0.1);
+    sadTrombone.setVolume(0.5);
+    finishingSound.setVolume(0.5);
+    var options = {
+        preventDefault: true
+      };
+    var hammer = new Hammer(document.body, options);
+    hammer.get('swipe').set({
+      direction: Hammer.DIRECTION_ALL
+    });
+    hammer.on("swipe", swiped);
 }
 
 function draw() {
+    if(isDone){
+        return
+    }
     clear();
     if (fuel.currentFuel <= 0) {
+        sadTrombone.play()
         push();
         fuel.display();
         pop();
@@ -85,11 +104,21 @@ function draw() {
         text("FAILED", canvasWidth / 2, canvasHeight / 2);
         sendDataToReactApp(gameHistory);
         pop();
+        isDone = true
         return;
     } else if (distance.kilometersToGo <= 0) {
+        finishingSound.play();
         textSize(50);
         textAlign(CENTER, CENTER);
         text("Juhuu, you are in bern!", canvasWidth / 2, canvasHeight / 2);
+        isDone = true
+        //textSize(50);
+        //textAlign(CENTER, CENTER);
+        //text("Juhuu, you are in bern!", canvasWidth / 2, canvasHeight / 2);
+        imageMode(CENTER);
+        rectMode(CENTER);
+        image(this.ybMeisterfeier, canvasWidth / 2, canvasHeight / 2);
+        finishingSound.stop();
         return;
     }
     frameRate(framerate);
@@ -107,7 +136,7 @@ function draw() {
     fill(100);
     textSize(20);
     textFont('consolas');
-    text("Consumption: " + consumption, canvasWidth - canvasWidth / 5, 20)
+    text("Verbrauch: " + consumption, canvasWidth - canvasWidth / 5, 20)
 
     pop();
     distance.display();
@@ -121,14 +150,24 @@ function draw() {
 }
 
 
-function keyPressed() {
-    if (keyCode === LEFT_ARROW && car.lane > 1) {
+function left(){
+    if(car.lane > 1){
         car.moveLeft();
         particleAnimator.move();
-    }
-    if (keyCode === RIGHT_ARROW && car.lane < street.lanes) {
+    }      
+}
+function right(){
+    if(car.lane < street.lanes){
         car.moveRight();
-        particleAnimator.move();
+        particleAnimator.move();  
+    }
+}
+function keyPressed() {
+    if (keyCode === RIGHT_ARROW) {
+        right();
+    }
+    if (keyCode === LEFT_ARROW) {
+        left();
     }
 }
 
@@ -152,7 +191,8 @@ function loadObstacles() {
             $.each(data, function(i, item) {
                 obstacles[index].push({
                     "png": loadImage(item.png),
-                    "consumption": item.consumption
+                    "consumption": item.consumption,
+                    "path": item.png
                 });
             })
         });
@@ -202,7 +242,7 @@ function displayObstacles() {
 function placeObstacle(lane) {
     let randomIndex = (Math.round(Math.random() * (obstacleImages[Categories[itemCount].name].length - 1)));
     this.lastIndex = randomIndex;
-    let item = new Item(Categories[itemCount].type, obstacleImages[Categories[itemCount].name][randomIndex].consumption, obstacleImages[Categories[itemCount].name][randomIndex].png);
+    let item = new Item(Categories[itemCount].type, obstacleImages[Categories[itemCount].name][randomIndex].consumption, obstacleImages[Categories[itemCount].name][randomIndex].png, obstacleImages[Categories[itemCount].name][randomIndex].path);
     Obstacles.push(new Obstacle(lane, canvasWidth, canvasHeight, laneWidth, item));
 }
 
@@ -231,8 +271,18 @@ function getWorstObstacle(obstacleArray, categorie) {
     return new Item(categorie.type, worst.consumption, worst.png);
 }
 
+function swiped(event) {
+    console.log(event);
+    if (event.direction == 4) {
+     right();
+    } else if (event.direction == 2) {
+      left();
+    }
+  }
+
 function sendDataToReactApp(value) {
     var element = document.getElementById('transfer-input');
     element.value = JSON.stringify(value);
     element.click();
 }
+

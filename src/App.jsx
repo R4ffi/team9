@@ -39,6 +39,7 @@ function App() {
           {isGameVisible && <div id="game"></div>}
           {!isGameVisible && <History history={history} />}
         </div>
+        
         <div className="camDiv">
           <WebcamCapture />
           <input id="transfer-input" type="hidden" name="action" value="" onChange={onChange} onClick={onClick} />
