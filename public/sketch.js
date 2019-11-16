@@ -5,6 +5,7 @@ let canvasWidth = 800;
 let laneWidth = 60;
 let canvasHeight = 600;
 let maxFuel = 50;
+let isBarricade = false;
 let fuel;
 let inventory;
 let particleAnimator;
@@ -39,7 +40,12 @@ let Categories = [{
     {
         "name": "travel",
         "type": ItemTypes.HOLIDAY
+    },
+    {
+        "name": "barricade", 
+        "type": ItemTypes.BARRICADE
     }
+
 ];
 
 function preload() {
@@ -164,22 +170,33 @@ function displayObstacles() {
     Obstacles[i].display();
     Obstacles[i].pos.y += speed;
     if (Obstacles[i].pos.y >= canvasHeight) {
-        this.itemCount++;
-        if (itemCount == 5) {
-            itemCount = 0;
+        if(Math.round(Math.random()/4)==1) {
+            this.isBarricade = true;
+        }
+        else {
+            this.itemCount++;
+            if (itemCount == Categories.length) {
+                itemCount = 0;
+            }
         }
         Obstacles[i].pos.y = 0;
         getNewObstacle();
     }
 
     if (car.pos.y - Obstacles[i].pos.y < Obstacles[i].size && Obstacles[i].lane == car.lane) {
-        this.itemCount++;
-        if (itemCount == 5) {
-            itemCount = 0;
+
+        if(Math.round(Math.random()/2)==1) {
+            this.isBarricade = true;
+        }
+        else {
+            this.itemCount++;
+            if (itemCount == Categories.length) {
+                itemCount = 0;
+            }
         }
         speed += 0.2
         let current = inventory.getCurrentItem(Obstacles[i].item.type)
-        if(current.consumption > Obstacles[i].item.consumption){
+        if(Obstacles[i].item.type == ItemTypes.BARRICADE || current.consumption > Obstacles[i].item.consumption){
             background(255,0,0,100);
             sadSoundEffect.play();
         }else if(inventory.getCurrentItem(Obstacles[i].item.type).consumption < Obstacles[i].item.consumption){
@@ -191,9 +208,14 @@ function displayObstacles() {
         History.push({
             "timestamp": Date.now(),
             "object": Obstacles[i].item
-    })
-        inventory.addItem(Obstacles[i].item)
-        consumption = inventory.getConsumption();
+        })
+        if(Obstacles[i].item.type == ItemTypes.BARRICADE){
+            fuel.use(Obstacles[i].item.consumption);
+        }
+        else {
+            inventory.addItem(Obstacles[i].item)
+            consumption = inventory.getConsumption();
+        }
         getNewObstacle();
     }
 }
@@ -206,10 +228,16 @@ function placeObstacle(lane) {
 }
 
 function getNewObstacle() {
-    let randomIndex = (Math.round(Math.random() * (obstacleImages[Categories[itemCount].name].length - 1)))
-
-    let item = new Item(Categories[itemCount].type, obstacleImages[Categories[itemCount].name][randomIndex].consumption, obstacleImages[Categories[itemCount].name][randomIndex].png)
-    if (inventory.getCurrentItem(item.type).image == item.image) {
+    let currentCategory = itemCount;
+    if(this.isBarricade) {
+        currentCategory = 5 //magic number :D 
+        this.isBarricade = false
+    }
+    let categorieName = Categories[currentCategory].name;
+    let randomIndex = (Math.round(Math.random() * (obstacleImages[categorieName].length - 1)))
+    let itemDetails = obstacleImages[categorieName][randomIndex];
+    let item = new Item(Categories[currentCategory].type, itemDetails.consumption, itemDetails.png)
+    if (inventory.getCurrentItem(item.type) != undefined && inventory.getCurrentItem(item.type).image == item.image) {
         return getNewObstacle();
     }
     Obstacles.pop()

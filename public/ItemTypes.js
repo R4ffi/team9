@@ -23,6 +23,11 @@ const ItemTypes = {
         r: 232,
         g: 128,
         b: 15
+    }, 
+    BARRICADE: {
+        r: 240,
+        g: 0, 
+        b: 0,
     }
 }
 /*
