@@ -2,27 +2,40 @@ const ItemTypes = {
     LIVING: {
         r: 130,
         g: 68,
-        b: 147
+        b: 147,
+        name: "Leben"
     },
     CAR: {
         r: 240,
         g: 133,
-        b: 135
+        b: 135,
+        name: "Auto"
     },
     HOLIDAY: {
         r: 41,
         g: 109,
-        b: 181
+        b: 181,
+        name: "Ferien"
     },
     ENERGYGEN: {
         r: 95,
         g: 187,
-        b: 158
+        b: 158,
+        name: "Energy generieren"
     },
     ENERGYPACK: {
         r: 232,
         g: 128,
-        b: 15
+        b: 15,
+        name: "EWB Energie pack"
+    }, 
+    BARRICADE: {
+        r: 240,
+        g: 0, 
+        b: 0,
+        b: 15,
+        name: "Hindernis"
+
     }
 }
 /*

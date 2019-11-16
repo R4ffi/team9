@@ -3,17 +3,17 @@
     {
       
       "name":"basisstrom",
-      "png":"assets/obstaclePNGs/beziehen/basisstrom.png",
+      "png":"assets/obstaclePNGs/beziehen/BasisStrom.png",
       "consumption":-4
     },
     {
       "name":"naturstrom",
-      "png":"assets/obstaclePNGs/beziehen/naturstrom.png",
+      "png":"assets/obstaclePNGs/beziehen/NaturStrom.png",
       "consumption":-3
     },
     {
       "name":"oekostrom",
-      "png":"assets/obstaclePNGs/beziehen/oekostrom.png",
+      "png":"assets/obstaclePNGs/beziehen/OekoStrom.png",
       "consumption":-2
     }
   ],
@@ -25,22 +25,22 @@
     },
     {
       "name":"porsche",
-      "png":"assets/obstaclePNGs/cars/porsche1.png",
+      "png":"assets/obstaclePNGs/cars/PorscheTaycan.png",
       "consumption":-4
     },
     {
       "name":"renaultzoe",
-      "png":"assets/obstaclePNGs/cars/RenaultZoe1.png",
+      "png":"assets/obstaclePNGs/cars/RenaultZoe.png",
       "consumption":-2
     },
     {
       "name":"tesla",
-      "png":"assets/obstaclePNGs/cars/teslaNew.png",
+      "png":"assets/obstaclePNGs/cars/TeslaModel3.png",
       "consumption":-1
     },
     {
       "name":"smart",
-      "png":"assets/obstaclePNGs/cars/SmartIcon3.png",
+      "png":"assets/obstaclePNGs/cars/Smart.png",
       "consumption":-3
     }
   ],
@@ -109,5 +109,17 @@
       "png":"assets/obstaclePNGs/travel/newyork.png",
       "consumption":-4
     }
+  ], 
+  "barricade":[
+    {
+      "name": "barricade",
+      "png" : "assets/obstaclePNGs/barricade/barricade.png",
+      "consumption":-5
+    },
+    {
+      "name": "barricade",
+      "png" : "assets/obstaclePNGs/barricade/barricade.png",
+      "consumption":-5
+    }  
   ]
 }

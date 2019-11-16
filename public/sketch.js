@@ -5,6 +5,7 @@ let canvasWidth;
 let laneWidth = 60;
 let canvasHeight;
 let maxFuel = 50;
+let isBarricade = false;
 let fuel;
 let inventory;
 let particleAnimator;
@@ -20,7 +21,10 @@ let count = 0;
 let maxDistance = 100;
 let gameHistory;
 let isDone = true;
+let isPreStart = true;
 let button;
+let isWon = false;
+let isBetter = true;
 
 let Categories = [{
         "name": "beziehen",
@@ -41,7 +45,12 @@ let Categories = [{
     {
         "name": "travel",
         "type": ItemTypes.HOLIDAY
+    },
+    {
+        "name": "barricade", 
+        "type": ItemTypes.BARRICADE
     }
+
 ];
 
 function preload() {
@@ -67,11 +76,9 @@ function setup() {
     canvasWidth = displayWidth * 0.8;
 
     
-    let diff = canvasWidth / laneWidth / 3;
-    console.log(diff);
-    let rightSideOfStreet = canvasWidth / 2 + diff * laneWidth;
+    let rightSideOfStreet = canvasWidth / 2 -  3 * laneWidth;
     placeObstacle(1);
-    car = new Car(canvasWidth, canvasHeight, laneWidth, cars["viper"]);
+    car = new Car(canvasWidth, canvasHeight, laneWidth, cars["truck"]);
     let canvas = createCanvas(canvasWidth, canvasHeight);
     canvas.parent('game');
     street = new Street(canvasWidth, canvasHeight, laneWidth, streetBackground);
@@ -79,7 +86,7 @@ function setup() {
     fuel = new Fuel(canvasWidth, canvasHeight, maxFuel)
     inventory = new Inventory(canvasWidth, canvasHeight, 40, 60)
     setStartObstacle();
-    distance = new Distance(canvasWidth, canvasHeight, rightSideOfStreet, canvasHeight - 100, canvasWidth - rightSideOfStreet, 100);
+    distance = new Distance(canvasWidth, canvasHeight, rightSideOfStreet, canvasHeight - 50, canvasWidth - rightSideOfStreet, 100);
 
     sadSoundEffect.setVolume(0.1);
     happySoundEffect.setVolume(0.1);
@@ -102,7 +109,7 @@ function setup() {
     button.style('text-decoration', 'none');
     button.style('display', 'inline-block');
     button.style('font-size', '16px');
-    button.position(displayWidth/2, displayHeight/2);
+    button.position(displayWidth/2-80, displayHeight/2);
     button.mousePressed(start); 
    
 }
@@ -111,7 +118,15 @@ function start(){
     isDone = false;
 }
 function draw() {
-    if (isDone) {
+    if(isWon){
+        return;
+    }
+    if (isPreStart) {
+        drawStartScreen();
+        return
+    }
+    if(isDone){
+        displayInventory();
         return
     }
     button.hide();
@@ -128,7 +143,7 @@ function draw() {
         text("FAILED", canvasWidth / 2, canvasHeight / 2);
         sendDataToReactApp(gameHistory);
         pop();
-        createDiv('<center><div onclick="OverlayOff()" id="overlay"><div id="text"><p>Ui, das het ned glängt! Kontaktier D\'EWB für hiuf!<br><a href="https://www.ewb.ch" target="_blank">EWB (Professionelli Hiuf)<a></p></div></div></center>');
+        document.getElementById("overlay").outerHTML = ('<center><div onclick="OverlayOff()" id="overlay"><div id="text"><p>Ui, leider hat es nicht gereicht! Kontaktiere die EWB für hilfe!<br><a href="https://www.ewb.ch" target="_blank">Klick Hier!<a></p></div></div></center>');
         document.getElementById("overlay").style.display = "block";
         isDone = true
         return;
@@ -136,8 +151,7 @@ function draw() {
         finishingSound.play();
         textSize(50);
         textAlign(CENTER, CENTER);
-        text("Juhuu, you are in bern!", canvasWidth / 2, canvasHeight / 2);
-        isDone = true
+        isWon = true
         imageMode(CENTER);
         rectMode(CENTER);
         image(this.ybMeisterfeier, canvasWidth / 2, canvasHeight / 2, canvasHeight * 1.4731, canvasHeight);
@@ -169,10 +183,12 @@ function draw() {
         count = 0;
     }
     count++;
+
 }
 
 
 function OverlayOff() {
+    isPreStart = false;
     document.getElementById("overlay").style.display = "none";
   }
 
@@ -227,29 +243,54 @@ function loadObstacles() {
     });
     return obstacles;
 }
+function setNewCar(item){
+    if(item.type == ItemTypes.CAR){
+        if(item.imagePath.includes("tesla")){
+            car.image = cars["audi"]
+        }else if (item.imagePath.includes("porsche")){
+            car.image = cars["viper"]
+        }else if(item.imagePath.includes("Dodge")){
+            car.image = cars["truck"]
+        }else{
+            car.image = cars["smart"];
+        }
+    }
 
+}
 function displayObstacles() {
     let i = 0;
     Obstacles[i].display();
     Obstacles[i].pos.y += speed;
     if (Obstacles[i].pos.y >= canvasHeight) {
-        this.itemCount++;
-        if (itemCount == 5) {
-            itemCount = 0;
+        if(Math.round(Math.random()/4)==1) {
+            this.isBarricade = true;
+        }
+        else {
+            this.itemCount++;
+            if (itemCount == Categories.length) {
+                itemCount = 0;
+            }
         }
         Obstacles[i].pos.y = 0;
         getNewObstacle();
     }
 
     if (car.pos.y - Obstacles[i].pos.y < Obstacles[i].size && Obstacles[i].lane == car.lane) {
-        this.itemCount++;
-        if (itemCount == 5) {
-            itemCount = 0;
+        setNewCar(Obstacles[i].item);
+        if(Math.round(Math.random()/2)==1) {
+            this.isBarricade = true;
         }
+        else {
+            this.itemCount++;
+            if (itemCount == Categories.length) {
+                itemCount = 0;
+            }
+        }
+        
         speed += 0.2
         let current = inventory.getCurrentItem(Obstacles[i].item.type)
-        if (current.consumption > Obstacles[i].item.consumption) {
-            background(255, 0, 0, 100);
+        if(Obstacles[i].item.type == ItemTypes.BARRICADE || current.consumption > Obstacles[i].item.consumption){
+            background(255,0,0,100);
             sadSoundEffect.play();
         } else if (inventory.getCurrentItem(Obstacles[i].item.type).consumption < Obstacles[i].item.consumption) {
             background(0, 255, 0, 100);
@@ -261,8 +302,13 @@ function displayObstacles() {
             "timestamp": Date.now(),
             "imagePath": Obstacles[i].item.imagePath
         })
-        inventory.addItem(Obstacles[i].item)
-        consumption = inventory.getConsumption();
+        if(Obstacles[i].item.type == ItemTypes.BARRICADE){
+            fuel.use(Obstacles[i].item.consumption);
+        }
+        else {
+            inventory.addItem(Obstacles[i].item)
+            consumption = inventory.getConsumption();
+        }
         getNewObstacle();
     }
 }
@@ -275,15 +321,25 @@ function placeObstacle(lane) {
 }
 
 function getNewObstacle() {
-    let randomIndex = (Math.round(Math.random() * (obstacleImages[Categories[itemCount].name].length - 1)))
 
-    let item = new Item(Categories[itemCount].type, obstacleImages[Categories[itemCount].name][randomIndex].consumption, obstacleImages[Categories[itemCount].name][randomIndex].png, obstacleImages[Categories[itemCount].name][randomIndex].path)
-    if (inventory.getCurrentItem(item.type).image == item.image) {
+    let currentCategory = itemCount;
+    if(this.isBarricade) {
+        currentCategory = 5 //magic number :D 
+        this.isBarricade = false
+    }
+    let categorieName = Categories[currentCategory].name;
+    let randomIndex = (Math.round(Math.random() * (obstacleImages[categorieName].length - 1)));
+    let itemDetails = obstacleImages[categorieName][randomIndex];
+    let item = new Item(Categories[itemCount].type, obstacleImages[Categories[itemCount].name][randomIndex].consumption, obstacleImages[Categories[itemCount].name][randomIndex].png, obstacleImages[Categories[itemCount].name][randomIndex].path);
+    if (inventory.getCurrentItem(item.type) != undefined && inventory.getCurrentItem(item.type).image == item.image) {
         return getNewObstacle();
     }
     Obstacles.pop()
     let lane = Math.round(Math.random() * (4)) + 1;
-    Obstacles.push(new Obstacle(lane, canvasWidth, canvasHeight, laneWidth, item));
+    let newObstacle = new Obstacle(lane, canvasWidth, canvasHeight, laneWidth, item);
+    isBetter = inventory.getCurrentItem(item.type) != undefined && item.consumption > inventory.getCurrentItem(item.type).consumption;
+    console.log(isBetter);
+    Obstacles.push(newObstacle);
 }
 
 function setStartObstacle() {
@@ -296,7 +352,7 @@ function setStartObstacle() {
 function getWorstObstacle(obstacleArray, categorie) {
     let res = Math.min.apply(Math, obstacleArray.map(function(o) { return o.consumption; }))
     let worst = obstacleArray.find(function(o) { return o.consumption == res; })
-    return new Item(categorie.type, worst.consumption, worst.png);
+    return new Item(categorie.type, worst.consumption, worst.png, worst.path);
 }
 
 function swiped(event) {
@@ -312,4 +368,45 @@ function sendDataToReactApp(value) {
     var element = document.getElementById('transfer-input');
     element.value = JSON.stringify(value);
     element.click();
+}
+
+function drawStartScreen(){
+    createDiv('<center><div onclick="OverlayOff()" id="overlay"><div id="text"><p>Willkommen bei der EWB Challenge!</p><p>Reduziere dein Energieverbruch, bis es dir ins Stadion reicht!</p></div></div></center>');
+    document.getElementById("overlay").style.display = "block";
+}
+
+function displayInventory(){
+    push();
+    textAlign(CENTER,CENTER);
+    imageMode(CENTER);
+    let itemsize = 100;
+    let index = 0;
+    let spacing = 10;
+    textSize(25);
+    textFont('consolas');
+    text("Dein Startinventar:", canvasWidth/2, canvasHeight/3)
+    pop();
+    push();
+    textAlign(CENTER,CENTER);
+    imageMode(CENTER);
+    textFont('consolas');
+    Categories.forEach(element => {
+        index++;
+        let item = inventory.getCurrentItem(element.type);
+        if(item == undefined)
+            return;
+        let currentX = (canvasWidth/2-(3*itemsize + 3*spacing)) + (index*itemsize);
+        let pictureY = canvasHeight/3+ itemsize;
+        let imageName = item.imagePath.split("/")[item.imagePath.split("/").length-1].split('.')[0];
+        text(item.type.name+":", currentX, pictureY - itemsize/1.4);
+        text(imageName, currentX, pictureY - itemsize/1.8);
+        image(item.image, currentX, pictureY, itemsize-spacing, itemsize-spacing);
+        if(item.consumption < 0){
+            text("Verbraucht:"+item.consumption * -1, currentX, pictureY+itemsize/1.8)
+        }else{
+            text("Generiert:"+item.consumption, currentX, pictureY+itemsize/1.8)
+        }
+        
+    });
+    pop();
 }
