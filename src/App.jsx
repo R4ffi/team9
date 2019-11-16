@@ -41,7 +41,7 @@ function App() {
       <div className="row">
         <div className="gameDiv">
           {isGameVisible && <div id="game"></div>}
-          {!isGameVisible && <History history={history} />}
+          {!isGameVisible && <History history={history} emotions={emotions} />}
         </div>
 
         <div className="camDiv">

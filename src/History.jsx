@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const History = ({ history }) => {
+export const History = ({ history, emotions }) => {
 
 
 
