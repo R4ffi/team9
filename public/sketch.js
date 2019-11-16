@@ -181,7 +181,8 @@ function loadObstacles() {
             $.each(data, function(i, item) {
                 obstacles[index].push({
                     "png": loadImage(item.png),
-                    "consumption": item.consumption
+                    "consumption": item.consumption,
+                    "path": item.png
                 });
             })
         });
@@ -220,7 +221,7 @@ function displayObstacles() {
         }
         History.push({
             "timestamp": Date.now(),
-            "object": Obstacles[i].item
+            "object": Obstacles[i].item.imagePath
         })
         inventory.addItem(Obstacles[i].item)
         consumption = inventory.getConsumption();
@@ -231,7 +232,7 @@ function displayObstacles() {
 function placeObstacle(lane) {
     let randomIndex = (Math.round(Math.random() * (obstacleImages[Categories[itemCount].name].length - 1)));
     this.lastIndex = randomIndex;
-    let item = new Item(Categories[itemCount].type, obstacleImages[Categories[itemCount].name][randomIndex].consumption, obstacleImages[Categories[itemCount].name][randomIndex].png);
+    let item = new Item(Categories[itemCount].type, obstacleImages[Categories[itemCount].name][randomIndex].consumption, obstacleImages[Categories[itemCount].name][randomIndex].png, obstacleImages[Categories[itemCount].name][randomIndex].path);
     Obstacles.push(new Obstacle(lane, canvasWidth, canvasHeight, laneWidth, item));
 }
 
