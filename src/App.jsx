@@ -1,16 +1,26 @@
 import React from 'react';
 import './App.css';
 import WebcamCapture from "./WebcamCapture";
+import { History } from './History';
 
 function App() {
   const [isGameVisible, setGameVisible] = React.useState(true);
+  const [history, setHistory] = React.useState([]);
 
   const onChange = () => {
   }
 
   const onClick = () => {
     const value = document.getElementById('transfer-input').value;
+    var obj = JSON.parse(value);
+
+    if (obj.length != history.length) {
+      setHistory(obj);
+      setGameVisible(false);
+    }
   }
+
+  history.map((item, index) => console.log(item));
 
   return (
     <div className="App">
@@ -27,6 +37,7 @@ function App() {
       <div className="row">
         <div className="gameDiv">
           {isGameVisible && <div id="game"></div>}
+          {!isGameVisible && <History history={history} />}
         </div>
         <div className="camDiv">
           <WebcamCapture />

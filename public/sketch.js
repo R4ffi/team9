@@ -18,7 +18,7 @@ let distance;
 let framerate = 30;
 let count = 0;
 let maxDistance = 100;
-let History;
+let gameHistory;
 
 let Categories = [{
         "name": "beziehen",
@@ -54,7 +54,7 @@ function preload() {
     soundFormats('mp3', 'ogg');
     sadSoundEffect = loadSound('assets/soundEffects/Punch.mp3');
     happySoundEffect = loadSound('assets/soundEffects/SuccessSoundEffect.mp3');
-    History = new Array();
+    gameHistory = new Array();
 }
 
 function setup() {
@@ -83,6 +83,7 @@ function draw() {
         textSize(50);
         textAlign(CENTER, CENTER);
         text("FAILED", canvasWidth / 2, canvasHeight / 2);
+        sendDataToReactApp(gameHistory);
         pop();
         return;
     } else if (distance.kilometersToGo <= 0) {
@@ -188,9 +189,9 @@ function displayObstacles() {
         } else {
             background(0, 0, 255, 100);
         }
-        History.push({
+        gameHistory.push({
             "timestamp": Date.now(),
-            "object": Obstacles[i].item
+            "imagePath": 'bla.jpg' //Obstacles[i].item.
         })
         inventory.addItem(Obstacles[i].item)
         consumption = inventory.getConsumption();
@@ -232,7 +233,6 @@ function getWorstObstacle(obstacleArray, categorie) {
 
 function sendDataToReactApp(value) {
     var element = document.getElementById('transfer-input');
-    element.value = value;
-    $("#transfer-input").change();
+    element.value = JSON.stringify(value);
     element.click();
 }
