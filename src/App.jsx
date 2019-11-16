@@ -2,10 +2,12 @@ import React from 'react';
 import './App.css';
 import WebcamCapture from "./WebcamCapture";
 import { History } from './History';
+import { PreviousMap } from 'postcss';
 
 function App() {
   const [isGameVisible, setGameVisible] = React.useState(true);
   const [history, setHistory] = React.useState([]);
+  const [emotions, setNewEmotion] = React.useState([]);
 
   const onChange = () => {
   }
@@ -18,6 +20,10 @@ function App() {
       setHistory(obj);
       setGameVisible(false);
     }
+  }
+
+  const handleNewEmotion = (newEmotion) => {
+    setNewEmotion(prev => [...prev, newEmotion]);
   }
 
   return (
@@ -37,9 +43,9 @@ function App() {
           {isGameVisible && <div id="game"></div>}
           {!isGameVisible && <History history={history} />}
         </div>
-        
+
         <div className="camDiv">
-          <WebcamCapture />
+          <WebcamCapture onAddEmotion={handleNewEmotion} />
           <input id="transfer-input" type="hidden" name="action" value="" onChange={onChange} onClick={onClick} />
         </div>
       </div>
