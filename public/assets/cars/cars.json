@@ -19,6 +19,10 @@
     {
       "name":"taxi",
       "png":"assets/cars/taxi.png"
+    },
+    {
+      "name":"smart",
+      "png":"assets/cars/smart.png"
     }
   ]
 }

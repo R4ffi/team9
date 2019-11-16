@@ -11,8 +11,8 @@ const videoConstraints = {
   facingMode: "user"
 };
 
-const WebcamCapture = () => {
-  const [emotion, setEmotion] = React.useState();
+const WebcamCapture = ({ onAddEmotion }) => {
+  const [emotion, setEmotion] = React.useState('');
 
   const webcamRef = React.useRef(null);
 
@@ -55,6 +55,7 @@ const WebcamCapture = () => {
                   }
                 })
                 setEmotion(emo);
+                onAddEmotion({ emotion: emo, timestamp: Date.now() })
               }
             })
           })
@@ -66,14 +67,22 @@ const WebcamCapture = () => {
   useInterval(capture, 2000);
 
   return (<React.Fragment >
-    <Webcam audio={false}
-      ref={webcamRef}
-      screenshotFormat="image/jpeg"
-      width={200}
-      videoConstraints={videoConstraints}
-    />
-    <div>{emotion}</div>
-    <img src={`assets/emotions/${emotion}.png`} alt={emotion} />
+    <div style={{ width: '100%', overflow: 'hidden', textAlign: 'center' }}>
+      <div style={{ overflow: 'hidden' }}>
+        <div className="smiley" >  <Webcam audio={false}
+          ref={webcamRef}
+          screenshotFormat="image/jpeg"
+          height={145}
+          videoConstraints={videoConstraints}
+        /> </div>
+        <div className="smiley" style={{ width: '120px' }}>
+          {emotion !== '' && <React.Fragment> <img src={`assets/emotions/${emotion}.png`} alt={emotion} /></React.Fragment>} <div>{emotion}</div>
+        </div>
+      </div>
+    </div>
+
+
+
   </React.Fragment >
   );
 };
