@@ -20,8 +20,6 @@ function App() {
     }
   }
 
-  history.map((item, index) => console.log(item));
-
   return (
     <div className="App">
       <div className="header">

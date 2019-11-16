@@ -56,12 +56,14 @@ function preload() {
     soundFormats('mp3', 'ogg');
     sadSoundEffect = loadSound('assets/soundEffects/Punch.mp3');
     happySoundEffect = loadSound('assets/soundEffects/SuccessSoundEffect.mp3');
+    sadTrombone = loadSound('assets/soundEffects/SadTrombone.mp3');
+    finishingSound = loadSound('assets/soundEffects/finishingSound.mp3');
     gameHistory = new Array();
 }
 
 function setup() {
-    canvasHeight = displayHeight*0.5;
-    canvasWidth = displayWidth*0.8;
+    canvasHeight = displayHeight * 0.5;
+    canvasWidth = displayWidth * 0.8;
     let rightSideOfStreet = canvasWidth / 2 + 5 * laneWidth;
     placeObstacle(1);
     car = new Car(canvasWidth, canvasHeight, laneWidth, cars["viper"]);
@@ -80,16 +82,16 @@ function setup() {
     finishingSound.setVolume(0.5);
     var options = {
         preventDefault: true
-      };
+    };
     var hammer = new Hammer(document.body, options);
     hammer.get('swipe').set({
-      direction: Hammer.DIRECTION_ALL
+        direction: Hammer.DIRECTION_ALL
     });
     hammer.on("swipe", swiped);
 }
 
 function draw() {
-    if(isDone){
+    if (isDone) {
         return
     }
     clear();
@@ -112,9 +114,9 @@ function draw() {
         textAlign(CENTER, CENTER);
         text("Juhuu, you are in bern!", canvasWidth / 2, canvasHeight / 2);
         isDone = true
-        //textSize(50);
-        //textAlign(CENTER, CENTER);
-        //text("Juhuu, you are in bern!", canvasWidth / 2, canvasHeight / 2);
+            //textSize(50);
+            //textAlign(CENTER, CENTER);
+            //text("Juhuu, you are in bern!", canvasWidth / 2, canvasHeight / 2);
         imageMode(CENTER);
         rectMode(CENTER);
         image(this.ybMeisterfeier, canvasWidth / 2, canvasHeight / 2);
@@ -150,18 +152,20 @@ function draw() {
 }
 
 
-function left(){
-    if(car.lane > 1){
+function left() {
+    if (car.lane > 1) {
         car.moveLeft();
         particleAnimator.move();
-    }      
-}
-function right(){
-    if(car.lane < street.lanes){
-        car.moveRight();
-        particleAnimator.move();  
     }
 }
+
+function right() {
+    if (car.lane < street.lanes) {
+        car.moveRight();
+        particleAnimator.move();
+    }
+}
+
 function keyPressed() {
     if (keyCode === RIGHT_ARROW) {
         right();
@@ -231,7 +235,7 @@ function displayObstacles() {
         }
         gameHistory.push({
             "timestamp": Date.now(),
-            "imagePath": 'bla.jpg' //Obstacles[i].item.
+            "imagePath": Obstacles[i].item.imagePath
         })
         inventory.addItem(Obstacles[i].item)
         consumption = inventory.getConsumption();
@@ -274,15 +278,14 @@ function getWorstObstacle(obstacleArray, categorie) {
 function swiped(event) {
     console.log(event);
     if (event.direction == 4) {
-     right();
+        right();
     } else if (event.direction == 2) {
-      left();
+        left();
     }
-  }
+}
 
 function sendDataToReactApp(value) {
     var element = document.getElementById('transfer-input');
     element.value = JSON.stringify(value);
     element.click();
 }
-
