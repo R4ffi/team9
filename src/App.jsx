@@ -30,7 +30,7 @@ function App() {
     <div className="App">
       <div className="header">
         <h1>ewb - energy with b...</h1>
-        <p>This is a game.</p>
+        {/* <p>This is a game.</p> */}
       </div>
       <div className="navbar">
         <a href="#" className="active">Home</a>
