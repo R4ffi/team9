@@ -143,7 +143,7 @@ function draw() {
         text("FAILED", canvasWidth / 2, canvasHeight / 2);
         sendDataToReactApp(gameHistory);
         pop();
-        document.getElementById("overlay").outerHTML = ('<center><div onclick="OverlayOff()" id="overlay"><div id="text"><p>Ui, leider hat es nicht gereicht! Kontaktiere die EWB für hilfe!<br><a href="https://www.ewb.ch" target="_blank">Klick Hier!<a></p></div></div></center>');
+        document.getElementById("overlay").outerHTML = ('<center><div onclick="OverlayOff()" id="overlay"><div id="text"><p>Ui, leider hat es nicht gereicht!<br>Kontaktiere die EWB für Hilfe!<br><a href="https://www.ewb.ch" target="_blank">Klick Hier!<a></p></div></div></center>');
         document.getElementById("overlay").style.display = "block";
         isDone = true
         return;
