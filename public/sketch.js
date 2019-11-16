@@ -108,17 +108,20 @@ function draw() {
     }
     button.hide();
     clear();
-    if (fuel.currentFuel <= 0) {
+    if (fuel.currentFuel > 0) {
         sadTrombone.play()
         push();
         fuel.display();
         pop();
         push();
         textSize(50);
+        textFont('consolas');
         textAlign(CENTER, CENTER);
         text("FAILED", canvasWidth / 2, canvasHeight / 2);
         sendDataToReactApp(gameHistory);
         pop();
+        createDiv('<center><div onclick="OverlayOff()" id="overlay"><div id="text"><p>Ui, das het ned glängt! Kontaktier D\'EWB für hiuf!<br><a href="https://www.ewb.ch" target="_blank">EWB (Professionelli Hiuf)<a></p></div></div></center>');
+        document.getElementById("overlay").style.display = "block";
         isDone = true
         return;
     } else if (distance.kilometersToGo <= 0) {
@@ -127,9 +130,12 @@ function draw() {
         textAlign(CENTER, CENTER);
         text("Juhuu, you are in bern!", canvasWidth / 2, canvasHeight / 2);
         isDone = true
+            //textSize(50);
+            //textAlign(CENTER, CENTER);
+            //text("Juhuu, you are in bern!", canvasWidth / 2, canvasHeight / 2);
         imageMode(CENTER);
         rectMode(CENTER);
-        image(this.ybMeisterfeier, canvasWidth / 2, canvasHeight / 2, canvasHeight * 1.4731, canvasHeight);
+        image(this.ybMeisterfeier, canvasWidth / 2, canvasHeight / 2);
         return;
     }
     frameRate(framerate);
@@ -160,6 +166,10 @@ function draw() {
     count++;
 }
 
+
+function OverlayOff() {
+    document.getElementById("overlay").style.display = "none";
+  }
 
 function left() {
     if (car.lane > 1) {
