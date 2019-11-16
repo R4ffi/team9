@@ -18,6 +18,15 @@ const WebcamCapture = ({ onAddEmotion }) => {
 
   const capture = React.useCallback(
     () => {
+      if (!webcamRef) {
+        return;
+      }
+
+      if (!webcamRef.canvas) {
+        return;
+      }
+
+
       const webcamCanvas = webcamRef.current.getCanvas();
       if (!webcamCanvas) {
         return;
@@ -76,7 +85,7 @@ const WebcamCapture = ({ onAddEmotion }) => {
           videoConstraints={videoConstraints}
         /> </div>
         <div className="smiley" style={{ width: '120px' }}>
-          {emotion !== '' && <React.Fragment> <img src={`assets/emotions/${emotion}.png`}  alt={emotion} /></React.Fragment>} <div>{emotion}</div>
+          {emotion !== '' && <React.Fragment> <img src={`assets/emotions/${emotion}.png`} alt={emotion} /></React.Fragment>} <div>{emotion}</div>
         </div>
       </div>
     </div>

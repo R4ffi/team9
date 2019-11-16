@@ -94,6 +94,14 @@ function setup() {
     });
     hammer.on("swipe", swiped);
     button = createButton("Start");
+    button.style('background-color', '#E8800F');
+    button.style('border', 'none');
+    button.style('color', 'white');
+    button.style('padding', '15px 32px');
+    button.style('text-align', 'center');
+    button.style('text-decoration', 'none');
+    button.style('display', 'inline-block');
+    button.style('font-size', '16px');
     button.position(displayWidth/2, displayHeight/2);
     button.mousePressed(start); 
    
@@ -269,7 +277,7 @@ function placeObstacle(lane) {
 function getNewObstacle() {
     let randomIndex = (Math.round(Math.random() * (obstacleImages[Categories[itemCount].name].length - 1)))
 
-    let item = new Item(Categories[itemCount].type, obstacleImages[Categories[itemCount].name][randomIndex].consumption, obstacleImages[Categories[itemCount].name][randomIndex].png)
+    let item = new Item(Categories[itemCount].type, obstacleImages[Categories[itemCount].name][randomIndex].consumption, obstacleImages[Categories[itemCount].name][randomIndex].png, obstacleImages[Categories[itemCount].name][randomIndex].path)
     if (inventory.getCurrentItem(item.type).image == item.image) {
         return getNewObstacle();
     }
