@@ -47,7 +47,7 @@ let Categories = [{
         "type": ItemTypes.HOLIDAY
     },
     {
-        "name": "barricade", 
+        "name": "barricade",
         "type": ItemTypes.BARRICADE
     }
 
@@ -60,8 +60,9 @@ function preload() {
     particleTexture = loadImage("assets/particle_texture.png")
     streetBackground = loadImage("assets/street.png")
     ybMeisterfeier = loadImage("assets/yb_meisterfeier.png")
+    consumptionImages = loadConsumptionImages();
+    productionImages = loadProductionImages();
     obstacleImages = loadObstacles();
-    console.log(obstacleImages)
     this.itemCount = 0;
     soundFormats('mp3', 'ogg');
     sadSoundEffect = loadSound('assets/soundEffects/Punch.mp3');
@@ -75,8 +76,8 @@ function setup() {
     canvasHeight = displayHeight * 0.5;
     canvasWidth = displayWidth * 0.8;
 
-    
-    let rightSideOfStreet = canvasWidth / 2 -  3 * laneWidth;
+
+    let rightSideOfStreet = canvasWidth / 2 - 3 * laneWidth;
     placeObstacle(1);
     car = new Car(canvasWidth, canvasHeight, laneWidth, cars["truck"]);
     let canvas = createCanvas(canvasWidth, canvasHeight);
@@ -84,7 +85,7 @@ function setup() {
     street = new Street(canvasWidth, canvasHeight, laneWidth, streetBackground);
     particleAnimator = new ParticleAnimator(particleTexture, car);
     fuel = new Fuel(canvasWidth, canvasHeight, maxFuel)
-    inventory = new Inventory(canvasWidth, canvasHeight, 40, 60)
+    inventory = new Inventory(canvasWidth, canvasHeight, 40, 60, consumptionImages, productionImages)
     setStartObstacle();
     distance = new Distance(canvasWidth, canvasHeight, rightSideOfStreet, canvasHeight - 50, canvasWidth - rightSideOfStreet, 100);
 
@@ -109,23 +110,24 @@ function setup() {
     button.style('text-decoration', 'none');
     button.style('display', 'inline-block');
     button.style('font-size', '16px');
-    button.position(displayWidth/2-80, displayHeight/2);
-    button.mousePressed(start); 
-   
+    button.position(displayWidth / 2 - 80, displayHeight / 2);
+    button.mousePressed(start);
+
 }
 
-function start(){
+function start() {
     isDone = false;
 }
+
 function draw() {
-    if(isWon){
+    if (isWon) {
         return;
     }
     if (isPreStart) {
         drawStartScreen();
         return
     }
-    if(isDone){
+    if (isDone) {
         displayInventory();
         return
     }
@@ -190,7 +192,7 @@ function draw() {
 function OverlayOff() {
     isPreStart = false;
     document.getElementById("overlay").style.display = "none";
-  }
+}
 
 function left() {
     if (car.lane > 1) {
@@ -243,29 +245,50 @@ function loadObstacles() {
     });
     return obstacles;
 }
-function setNewCar(item){
-    if(item.type == ItemTypes.CAR){
-        if(item.imagePath.includes("tesla")){
+
+function loadConsumptionImages() {
+    return [
+        loadImage("assets/consumption/cons-1.png"),
+        loadImage("assets/consumption/cons-2.png"),
+        loadImage("assets/consumption/cons-3.png"),
+        loadImage("assets/consumption/cons-4.png"),
+        loadImage("assets/consumption/cons-5.png")
+    ];
+}
+
+function loadProductionImages() {
+    return [
+        loadImage("assets/consumption/prod-1.png"),
+        loadImage("assets/consumption/prod-2.png"),
+        loadImage("assets/consumption/prod-3.png"),
+        loadImage("assets/consumption/prod-4.png"),
+        loadImage("assets/consumption/prod-5.png")
+    ];
+}
+
+function setNewCar(item) {
+    if (item.type == ItemTypes.CAR) {
+        if (item.imagePath.includes("tesla")) {
             car.image = cars["audi"]
-        }else if (item.imagePath.includes("porsche")){
+        } else if (item.imagePath.includes("porsche")) {
             car.image = cars["viper"]
-        }else if(item.imagePath.includes("Dodge")){
+        } else if (item.imagePath.includes("Dodge")) {
             car.image = cars["truck"]
-        }else{
+        } else {
             car.image = cars["smart"];
         }
     }
 
 }
+
 function displayObstacles() {
     let i = 0;
     Obstacles[i].display();
     Obstacles[i].pos.y += speed;
     if (Obstacles[i].pos.y >= canvasHeight) {
-        if(Math.round(Math.random()/4)==1) {
+        if (Math.round(Math.random() / 4) == 1) {
             this.isBarricade = true;
-        }
-        else {
+        } else {
             this.itemCount++;
             if (itemCount == Categories.length) {
                 itemCount = 0;
@@ -277,20 +300,19 @@ function displayObstacles() {
 
     if (car.pos.y - Obstacles[i].pos.y < Obstacles[i].size && Obstacles[i].lane == car.lane) {
         setNewCar(Obstacles[i].item);
-        if(Math.round(Math.random()/2)==1) {
+        if (Math.round(Math.random() / 2) == 1) {
             this.isBarricade = true;
-        }
-        else {
+        } else {
             this.itemCount++;
             if (itemCount == Categories.length) {
                 itemCount = 0;
             }
         }
-        
+
         speed += 0.2
         let current = inventory.getCurrentItem(Obstacles[i].item.type)
-        if(Obstacles[i].item.type == ItemTypes.BARRICADE || current.consumption > Obstacles[i].item.consumption){
-            background(255,0,0,100);
+        if (Obstacles[i].item.type == ItemTypes.BARRICADE || current.consumption > Obstacles[i].item.consumption) {
+            background(255, 0, 0, 100);
             sadSoundEffect.play();
         } else if (inventory.getCurrentItem(Obstacles[i].item.type).consumption < Obstacles[i].item.consumption) {
             background(0, 255, 0, 100);
@@ -302,10 +324,9 @@ function displayObstacles() {
             "timestamp": Date.now(),
             "imagePath": Obstacles[i].item.imagePath
         })
-        if(Obstacles[i].item.type == ItemTypes.BARRICADE){
+        if (Obstacles[i].item.type == ItemTypes.BARRICADE) {
             fuel.use(Obstacles[i].item.consumption);
-        }
-        else {
+        } else {
             inventory.addItem(Obstacles[i].item)
             consumption = inventory.getConsumption();
         }
@@ -323,7 +344,7 @@ function placeObstacle(lane) {
 function getNewObstacle() {
 
     let currentCategory = itemCount;
-    if(this.isBarricade) {
+    if (this.isBarricade) {
         currentCategory = 5 //magic number :D 
         this.isBarricade = false
     }
@@ -370,43 +391,43 @@ function sendDataToReactApp(value) {
     element.click();
 }
 
-function drawStartScreen(){
+function drawStartScreen() {
     createDiv('<center><div onclick="OverlayOff()" id="overlay"><div id="text"><p>Willkommen bei der EWB Challenge!</p><p>Reduziere dein Energieverbruch, bis es dir ins Stadion reicht!</p></div></div></center>');
     document.getElementById("overlay").style.display = "block";
 }
 
-function displayInventory(){
+function displayInventory() {
     push();
-    textAlign(CENTER,CENTER);
+    textAlign(CENTER, CENTER);
     imageMode(CENTER);
     let itemsize = 100;
     let index = 0;
     let spacing = 10;
     textSize(25);
     textFont('consolas');
-    text("Dein Startinventar:", canvasWidth/2, canvasHeight/3)
+    text("Dein Startinventar:", canvasWidth / 2, canvasHeight / 3)
     pop();
     push();
-    textAlign(CENTER,CENTER);
+    textAlign(CENTER, CENTER);
     imageMode(CENTER);
     textFont('consolas');
     Categories.forEach(element => {
         index++;
         let item = inventory.getCurrentItem(element.type);
-        if(item == undefined)
+        if (item == undefined)
             return;
-        let currentX = (canvasWidth/2-(3*itemsize + 3*spacing)) + (index*itemsize);
-        let pictureY = canvasHeight/3+ itemsize;
-        let imageName = item.imagePath.split("/")[item.imagePath.split("/").length-1].split('.')[0];
-        text(item.type.name+":", currentX, pictureY - itemsize/1.4);
-        text(imageName, currentX, pictureY - itemsize/1.8);
-        image(item.image, currentX, pictureY, itemsize-spacing, itemsize-spacing);
-        if(item.consumption < 0){
-            text("Verbraucht:"+item.consumption * -1, currentX, pictureY+itemsize/1.8)
-        }else{
-            text("Generiert:"+item.consumption, currentX, pictureY+itemsize/1.8)
+        let currentX = (canvasWidth / 2 - (3 * itemsize + 3 * spacing)) + (index * itemsize);
+        let pictureY = canvasHeight / 3 + itemsize;
+        let imageName = item.imagePath.split("/")[item.imagePath.split("/").length - 1].split('.')[0];
+        text(item.type.name + ":", currentX, pictureY - itemsize / 1.4);
+        text(imageName, currentX, pictureY - itemsize / 1.8);
+        image(item.image, currentX, pictureY, itemsize - spacing, itemsize - spacing);
+        if (item.consumption < 0) {
+            text("Verbraucht:" + item.consumption * -1, currentX, pictureY + itemsize / 1.8)
+        } else {
+            text("Generiert:" + item.consumption, currentX, pictureY + itemsize / 1.8)
         }
-        
+
     });
     pop();
 }

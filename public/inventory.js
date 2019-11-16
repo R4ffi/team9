@@ -5,7 +5,7 @@ class Inventory {
     EnergyPackage;
     EnergyGenerator;
 
-    constructor(canvasWidth, canvasHeight, itemSpace, itemSize) {
+    constructor(canvasWidth, canvasHeight, itemSpace, itemSize, consumptionImages, productionImages) {
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
         this.itemSpace = itemSpace;
@@ -16,7 +16,13 @@ class Inventory {
         this.Holiday = new Item(ItemTypes.HOLIDAY, 0, img)
         this.EnergyPackage = new Item(ItemTypes.ENERGYPACK, 0, img)
         this.EnergyGenerator = new Item(ItemTypes.ENERGYGEN, 0, img)
-        this.textSpace = 10
+        this.textSpace = 10;
+        this.consumptionImages = consumptionImages;
+        this.productionImages = productionImages;
+
+        this.consumptionImageWidth = itemSize * 2.5;
+        this.consumptionImageHeight = itemSize / 2;
+        this.consumptionImageXPos = this.itemSize + this.itemSpace - this.textSpace + this.consumptionImageWidth / 2;
     }
     getCurrentItem(itemType) {
         switch (itemType) {
@@ -73,7 +79,7 @@ class Inventory {
         fill(100);
         textFont('consolas');
         text("Strom", this.itemSize + this.itemSpace - this.textSpace, this.itemSpace - this.textSpace);
-        text(this.EnergyPackage.consumption, this.itemSize + this.itemSpace - this.textSpace, this.itemSpace + this.textSpace);
+        image(this.consumptionImages[Math.abs(this.EnergyPackage.consumption) - 1], this.consumptionImageXPos, this.itemSpace + this.textSpace, this.consumptionImageWidth, this.consumptionImageHeight);
         pop();
     }
 
@@ -89,7 +95,7 @@ class Inventory {
         fill(100);
         textFont('consolas');
         text("Wohnen", this.itemSize + this.itemSpace - this.textSpace, this.itemSize + 1.5 * this.itemSpace - this.textSpace);
-        text(this.Living.consumption, this.itemSize + this.itemSpace - this.textSpace, this.itemSize + 1.5 * this.itemSpace + this.textSpace);
+        image(this.consumptionImages[Math.abs(this.Living.consumption) - 1], this.consumptionImageXPos, this.itemSize + 1.5 * this.itemSpace + this.textSpace, this.consumptionImageWidth, this.consumptionImageHeight);
         pop();
     }
 
@@ -105,7 +111,7 @@ class Inventory {
         fill(100);
         textFont('consolas');
         text("Auto", this.itemSize + this.itemSpace - this.textSpace, 2 * this.itemSize + 2 * this.itemSpace - this.textSpace);
-        text(this.Car.consumption, this.itemSize + this.itemSpace - this.textSpace, 2 * this.itemSize + 2 * this.itemSpace + this.textSpace);
+        image(this.consumptionImages[Math.abs(this.Car.consumption) - 1], this.consumptionImageXPos, 2 * this.itemSize + 2 * this.itemSpace + this.textSpace, this.consumptionImageWidth, this.consumptionImageHeight);
         pop();
     }
 
@@ -121,7 +127,7 @@ class Inventory {
         fill(100);
         textFont('consolas');
         text("Ferien", this.itemSize + this.itemSpace - this.textSpace, 3 * this.itemSize + 2.5 * this.itemSpace - this.textSpace);
-        text(this.Holiday.consumption, this.itemSize + this.itemSpace - this.textSpace, 3 * this.itemSize + 2.5 * this.itemSpace + this.textSpace);
+        image(this.consumptionImages[Math.abs(this.Holiday.consumption) - 1], this.consumptionImageXPos, 3 * this.itemSize + 2.5 * this.itemSpace + this.textSpace, this.consumptionImageWidth, this.consumptionImageHeight);
         pop();
     }
 
@@ -136,8 +142,8 @@ class Inventory {
         textSize(20);
         fill(100);
         textFont('consolas');
-        text("Prod.", this.itemSize + this.itemSpace - this.textSpace, 4 * this.itemSize + 3 * this.itemSpace - this.textSpace);
-        text("+" + this.EnergyGenerator.consumption, this.itemSize + this.itemSpace - this.textSpace, 4 * this.itemSize + 3 * this.itemSpace + this.textSpace);
+        text("Selbsterzeuger", this.itemSize + this.itemSpace - this.textSpace, 4 * this.itemSize + 3 * this.itemSpace - this.textSpace);
+        image(this.productionImages[Math.abs(this.EnergyGenerator.consumption) - 1], this.consumptionImageXPos, 4 * this.itemSize + 3 * this.itemSpace + this.textSpace, this.consumptionImageWidth, this.consumptionImageHeight);
         pop();
     }
 
