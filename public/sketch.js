@@ -252,6 +252,8 @@ function setNewCar(item){
             car.image = cars["porsche"]
         }else if(item.imagePath.includes("Dodge")){
             car.image = cars["truck"]
+        }else if(item.imagePath.includes("Zoe") || item.imagePath.includes("zoe")){
+            car.image = cars["zoe"]
         }else{
             car.image = cars["smart"];
         }

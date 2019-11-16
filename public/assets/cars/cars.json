@@ -6,7 +6,7 @@
     },
     {
       "name":"truck",
-      "png":"assets/cars/Mini_truck.png"
+      "png":"assets/cars/Mini_truck2.png"
     },
     {
       "name":"van",
@@ -17,8 +17,8 @@
       "png":"assets/cars/porsche.png"
     },
     {
-      "name":"taxi",
-      "png":"assets/cars/taxi.png"
+      "name":"zoe",
+      "png":"assets/cars/zoe.png"
     },
     {
       "name":"smart",
