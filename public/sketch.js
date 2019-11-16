@@ -19,6 +19,7 @@ let framerate = 30;
 let count = 0;
 let maxDistance = 100;
 let History;
+let isDone = false;
 
 let Categories = [{
         "name": "beziehen",
@@ -75,8 +76,8 @@ function setup() {
     setStartObstacle();
     distance = new Distance(canvasWidth, canvasHeight, rightSideOfStreet, canvasHeight - 100, canvasWidth - rightSideOfStreet, 100);
 
-    sadSoundEffect.setVolume(0.3);
-    happySoundEffect.setVolume(0.3);
+    sadSoundEffect.setVolume(0.1);
+    happySoundEffect.setVolume(0.1);
     sadTrombone.setVolume(0.5);
     finishingSound.setVolume(0.5);
     var options = {
@@ -87,10 +88,12 @@ function setup() {
       direction: Hammer.DIRECTION_ALL
     });
     hammer.on("swipe", swiped);
-
 }
 
 function draw() {
+    if(isDone){
+        return
+    }
     clear();
     if (fuel.currentFuel <= 0) {
         sadTrombone.play()
@@ -102,10 +105,14 @@ function draw() {
         textAlign(CENTER, CENTER);
         text("FAILED", canvasWidth / 2, canvasHeight / 2);
         pop();
-        sadTrombone.stop();
+        isDone = true
         return;
     } else if (distance.kilometersToGo <= 0) {
         finishingSound.play();
+        textSize(50);
+        textAlign(CENTER, CENTER);
+        text("Juhuu, you are in bern!", canvasWidth / 2, canvasHeight / 2);
+        isDone = true
         //textSize(50);
         //textAlign(CENTER, CENTER);
         //text("Juhuu, you are in bern!", canvasWidth / 2, canvasHeight / 2);
@@ -280,3 +287,4 @@ function sendDataToReactApp(value) {
     $("#transfer-input").change();
     element.click();
 }
+
