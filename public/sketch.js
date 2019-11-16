@@ -19,7 +19,8 @@ let framerate = 30;
 let count = 0;
 let maxDistance = 100;
 let gameHistory;
-let isDone = false;
+let isDone = true;
+let button;
 
 let Categories = [{
         "name": "beziehen",
@@ -64,7 +65,11 @@ function preload() {
 function setup() {
     canvasHeight = displayHeight * 0.5;
     canvasWidth = displayWidth * 0.8;
-    let rightSideOfStreet = canvasWidth / 2 + 5 * laneWidth;
+
+    
+    let diff = canvasWidth / laneWidth / 3;
+    console.log(diff);
+    let rightSideOfStreet = canvasWidth / 2 + diff * laneWidth;
     placeObstacle(1);
     car = new Car(canvasWidth, canvasHeight, laneWidth, cars["viper"]);
     let canvas = createCanvas(canvasWidth, canvasHeight);
@@ -88,12 +93,20 @@ function setup() {
         direction: Hammer.DIRECTION_ALL
     });
     hammer.on("swipe", swiped);
+    button = createButton("Start");
+    button.position(displayWidth/2, displayHeight/2);
+    button.mousePressed(start); 
+   
 }
 
+function start(){
+    isDone = false;
+}
 function draw() {
     if (isDone) {
         return
     }
+    button.hide();
     clear();
     if (fuel.currentFuel <= 0) {
         sadTrombone.play()
@@ -114,12 +127,9 @@ function draw() {
         textAlign(CENTER, CENTER);
         text("Juhuu, you are in bern!", canvasWidth / 2, canvasHeight / 2);
         isDone = true
-            //textSize(50);
-            //textAlign(CENTER, CENTER);
-            //text("Juhuu, you are in bern!", canvasWidth / 2, canvasHeight / 2);
         imageMode(CENTER);
         rectMode(CENTER);
-        image(this.ybMeisterfeier, canvasWidth / 2, canvasHeight / 2);
+        image(this.ybMeisterfeier, canvasWidth / 2, canvasHeight / 2, canvasHeight * 1.4731, canvasHeight);
         return;
     }
     frameRate(framerate);
