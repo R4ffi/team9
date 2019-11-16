@@ -94,6 +94,14 @@ function setup() {
     });
     hammer.on("swipe", swiped);
     button = createButton("Start");
+    button.style('background-color', '#E8800F');
+    button.style('border', 'none');
+    button.style('color', 'white');
+    button.style('padding', '15px 32px');
+    button.style('text-align', 'center');
+    button.style('text-decoration', 'none');
+    button.style('display', 'inline-block');
+    button.style('font-size', '16px');
     button.position(displayWidth/2, displayHeight/2);
     button.mousePressed(start); 
    
