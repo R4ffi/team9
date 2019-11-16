@@ -35,7 +35,7 @@ function App() {
         {/* <p>This is a game.</p> */}
       </div>
       <div className="navbar">
-        <a href="#" className="active">Home</a>
+        <a href="javascript:window.location.reload(true)" className="active">Home</a>
         <a href="javascript:window.location.reload(true)">Retry</a>
         <a href="https://github.com/R4ffi/team9" target="_blank" className="right">gitRepo</a>
       </div>
