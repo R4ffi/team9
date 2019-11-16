@@ -135,7 +135,7 @@ function draw() {
         text("FAILED", canvasWidth / 2, canvasHeight / 2);
         sendDataToReactApp(gameHistory);
         pop();
-        document.getElementById("overlay").outerHTML = ('<center><div onclick="OverlayOff()" id="overlay"><div id="text"><p>Ui, das het ned glängt! Kontaktier D\'EWB für hiuf!<br><a href="https://www.ewb.ch" target="_blank">Klick Hie!<a></p></div></div></center>');
+        document.getElementById("overlay").outerHTML = ('<center><div onclick="OverlayOff()" id="overlay"><div id="text"><p>Ui, leider hat es nicht gereicht! Kontaktiere die EWB für hilfe!<br><a href="https://www.ewb.ch" target="_blank">Klick Hier!<a></p></div></div></center>');
         document.getElementById("overlay").style.display = "block";
         isDone = true
         return;
@@ -245,7 +245,7 @@ function setNewCar(item){
         }else if(item.imagePath.includes("Dodge")){
             car.image = cars["truck"]
         }else{
-            car.image = item.image;
+            car.image = cars["smart"];
         }
     }
 
