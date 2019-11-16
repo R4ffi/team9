@@ -127,12 +127,9 @@ function draw() {
         textAlign(CENTER, CENTER);
         text("Juhuu, you are in bern!", canvasWidth / 2, canvasHeight / 2);
         isDone = true
-            //textSize(50);
-            //textAlign(CENTER, CENTER);
-            //text("Juhuu, you are in bern!", canvasWidth / 2, canvasHeight / 2);
         imageMode(CENTER);
         rectMode(CENTER);
-        image(this.ybMeisterfeier, canvasWidth / 2, canvasHeight / 2);
+        image(this.ybMeisterfeier, canvasWidth / 2, canvasHeight / 2, canvasHeight * 1.4731, canvasHeight);
         return;
     }
     frameRate(framerate);
