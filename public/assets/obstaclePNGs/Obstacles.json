@@ -52,7 +52,7 @@
     },
     {
       "name":"waermepumpe",
-      "png":"assets/obstaclePNGs/Erzeugen/Waermepumpe.png",
+      "png":"assets/obstaclePNGs/Erzeugen/Wärmepumpe.png",
       "consumption":2
     },
     {
@@ -69,12 +69,12 @@
     },
     {
       "name":"KuecheAPlus",
-      "png":"assets/obstaclePNGs/home/KuecheAPlus.png",
+      "png":"assets/obstaclePNGs/home/KuecheA+++.png",
       "consumption":-1
     },
     {
       "name":"oelheitzung",
-      "png":"assets/obstaclePNGs/home/oelheitzung.png",
+      "png":"assets/obstaclePNGs/home/Ölheitzung.png",
       "consumption":-4
     },
     {
@@ -86,27 +86,27 @@
   "travel":[
     {
       "name":"bali",
-      "png":"assets/obstaclePNGs/travel/bali.png",
+      "png":"assets/obstaclePNGs/travel/Bali.png",
       "consumption":-5
     },
     {
       "name":"bern",
-      "png":"assets/obstaclePNGs/travel/bern.png",
+      "png":"assets/obstaclePNGs/travel/Bern.png",
       "consumption":-1
     },
     {
       "name":"florenz",
-      "png":"assets/obstaclePNGs/travel/florenz.png",
+      "png":"assets/obstaclePNGs/travel/Florenz.png",
       "consumption":-3
     },
     {
       "name":"graubuenden",
-      "png":"assets/obstaclePNGs/travel/graubuenden.png",
+      "png":"assets/obstaclePNGs/travel/Graubünden.png",
       "consumption":-2
     },
     {
       "name":"newyork",
-      "png":"assets/obstaclePNGs/travel/newyork.png",
+      "png":"assets/obstaclePNGs/travel/NewYork.png",
       "consumption":-4
     }
   ]
