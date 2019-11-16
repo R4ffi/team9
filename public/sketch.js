@@ -22,6 +22,7 @@ let gameHistory;
 let isDone = true;
 let isPreStart = true;
 let button;
+let isWon = false;
 let isBetter = true;
 
 let Categories = [{
@@ -113,6 +114,9 @@ function start(){
     isDone = false;
 }
 function draw() {
+    if(isWon){
+        return;
+    }
     if (isPreStart) {
         drawStartScreen();
         return
@@ -143,8 +147,7 @@ function draw() {
         finishingSound.play();
         textSize(50);
         textAlign(CENTER, CENTER);
-        text("Juhuu, you are in bern!", canvasWidth / 2, canvasHeight / 2);
-        isDone = true
+        isWon = true
         imageMode(CENTER);
         rectMode(CENTER);
         image(this.ybMeisterfeier, canvasWidth / 2, canvasHeight / 2, canvasHeight * 1.4731, canvasHeight);
