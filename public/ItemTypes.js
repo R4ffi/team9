@@ -28,6 +28,14 @@ const ItemTypes = {
         g: 128,
         b: 15,
         name: "EWB Energie pack"
+    }, 
+    BARRICADE: {
+        r: 240,
+        g: 0, 
+        b: 0,
+        b: 15,
+        name: "Hindernis"
+
     }
 }
 /*

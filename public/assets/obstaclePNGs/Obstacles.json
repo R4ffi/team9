@@ -109,5 +109,17 @@
       "png":"assets/obstaclePNGs/travel/NewYork.png",
       "consumption":-4
     }
+  ], 
+  "barricade":[
+    {
+      "name": "barricade",
+      "png" : "assets/obstaclePNGs/barricade/barricade.png",
+      "consumption":-5
+    },
+    {
+      "name": "barricade",
+      "png" : "assets/obstaclePNGs/barricade/barricade.png",
+      "consumption":-5
+    }  
   ]
 }

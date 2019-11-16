@@ -26,6 +26,8 @@ function App() {
     setNewEmotion(prev => [...prev, newEmotion]);
   }
 
+  const divProps = isGameVisible ? {} : { style: { visibility: 'hidden' } };
+
   return (
     <div className="App">
       <div className="header">
@@ -42,8 +44,7 @@ function App() {
           {isGameVisible && <div id="game"></div>}
           {!isGameVisible && <History history={history} emotions={emotions} />}
         </div>
-
-        <div className="camDiv">
+        <div className="camDiv" {...divProps} >
           <WebcamCapture onAddEmotion={handleNewEmotion} />
           <input id="transfer-input" type="hidden" name="action" value="" onChange={onChange} onClick={onClick} />
         </div>
