@@ -18,15 +18,6 @@ const WebcamCapture = ({ onAddEmotion }) => {
 
   const capture = React.useCallback(
     () => {
-      if (!webcamRef) {
-        return;
-      }
-
-      if (!webcamRef.canvas) {
-        return;
-      }
-
-
       const webcamCanvas = webcamRef.current.getCanvas();
       if (!webcamCanvas) {
         return;
