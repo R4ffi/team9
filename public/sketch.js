@@ -76,9 +76,7 @@ function setup() {
     canvasWidth = displayWidth * 0.8;
 
     
-    let diff = canvasWidth / laneWidth / 3;
-    console.log(diff);
-    let rightSideOfStreet = canvasWidth / 2 + diff * laneWidth;
+    let rightSideOfStreet = canvasWidth / 2 -  3 * laneWidth;
     placeObstacle(1);
     car = new Car(canvasWidth, canvasHeight, laneWidth, cars["truck"]);
     let canvas = createCanvas(canvasWidth, canvasHeight);
@@ -88,7 +86,7 @@ function setup() {
     fuel = new Fuel(canvasWidth, canvasHeight, maxFuel)
     inventory = new Inventory(canvasWidth, canvasHeight, 40, 60)
     setStartObstacle();
-    distance = new Distance(canvasWidth, canvasHeight, rightSideOfStreet, canvasHeight - 100, canvasWidth - rightSideOfStreet, 100);
+    distance = new Distance(canvasWidth, canvasHeight, rightSideOfStreet, canvasHeight - 50, canvasWidth - rightSideOfStreet, 100);
 
     sadSoundEffect.setVolume(0.1);
     happySoundEffect.setVolume(0.1);
