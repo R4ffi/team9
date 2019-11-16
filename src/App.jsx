@@ -35,7 +35,7 @@ function App() {
       <div className="navbar">
         <a href="#" className="active">Home</a>
         <a href="javascript:window.location.reload(true)">Retry</a>
-        <a href="#" className="right">Link</a>
+        <a href="https://github.com/R4ffi/team9" target="_blank" className="right">gitRepo</a>
       </div>
       <div className="row">
         <div className="gameDiv">
@@ -43,10 +43,10 @@ function App() {
           {!isGameVisible && <History history={history} emotions={emotions} />}
         </div>
 
-        <div className="camDiv">
+        {isGameVisible && <div className="camDiv">
           <WebcamCapture onAddEmotion={handleNewEmotion} />
           <input id="transfer-input" type="hidden" name="action" value="" onChange={onChange} onClick={onClick} />
-        </div>
+        </div>}
       </div>
       <div className="footer">
         <h2></h2>
