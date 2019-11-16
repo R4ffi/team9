@@ -43,10 +43,10 @@ function App() {
           {!isGameVisible && <History history={history} emotions={emotions} />}
         </div>
 
-        <div className="camDiv">
+        {isGameVisible && <div className="camDiv">
           <WebcamCapture onAddEmotion={handleNewEmotion} />
           <input id="transfer-input" type="hidden" name="action" value="" onChange={onChange} onClick={onClick} />
-        </div>
+        </div>}
       </div>
       <div className="footer">
         <h2></h2>

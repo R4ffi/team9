@@ -21,10 +21,10 @@ export const History = ({ history, emotions }) => {
       <table>
         <tbody>
           <tr>
-            {items.map((item, index) => <td key={index}>{item.imagePath}<img style={{ width: '120px' }} src={item.imagePath} alt={item.imagePath} /></td>)}
+            {items.map((item, index) => <td key={index}>{item.imagePath}<img style={{ width: '60px' }} src={item.imagePath} alt={item.imagePath} /></td>)}
           </tr>
           <tr>
-            {items.map((item, index) => <td key={index}><img src={`assets/emotions/${item.emotion}.png`} alt={item.emotion} /></td>)}
+            {items.map((item, index) => <td key={index}><img style={{ width: '60px' }}  src={`assets/emotions/${item.emotion}.png`} alt={item.emotion} /></td>)}
           </tr>
         </tbody>
       </table>
