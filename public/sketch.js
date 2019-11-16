@@ -1,9 +1,9 @@
-let car;
+var car;
 let carImage;
 let street;
-let canvasWidth = 800;
+let canvasWidth;
 let laneWidth = 60;
-let canvasHeight = 600;
+let canvasHeight;
 let maxFuel = 50;
 let isBarricade = false;
 let fuel;
@@ -19,7 +19,9 @@ let distance;
 let framerate = 30;
 let count = 0;
 let maxDistance = 100;
-let History;
+let gameHistory;
+let isDone = true;
+let button;
 
 let Categories = [{
         "name": "beziehen",
@@ -54,17 +56,26 @@ function preload() {
     Obstacles = new Array();
     particleTexture = loadImage("assets/particle_texture.png")
     streetBackground = loadImage("assets/street.png")
+    ybMeisterfeier = loadImage("assets/yb_meisterfeier.png")
     obstacleImages = loadObstacles();
     console.log(obstacleImages)
     this.itemCount = 0;
     soundFormats('mp3', 'ogg');
     sadSoundEffect = loadSound('assets/soundEffects/Punch.mp3');
     happySoundEffect = loadSound('assets/soundEffects/SuccessSoundEffect.mp3');
-    History = new Array();
+    sadTrombone = loadSound('assets/soundEffects/SadTrombone.mp3');
+    finishingSound = loadSound('assets/soundEffects/finishingSound.mp3');
+    gameHistory = new Array();
 }
 
 function setup() {
-    let rightSideOfStreet = canvasWidth / 2 + 5 * laneWidth;
+    canvasHeight = displayHeight * 0.5;
+    canvasWidth = displayWidth * 0.8;
+
+    
+    let diff = canvasWidth / laneWidth / 3;
+    console.log(diff);
+    let rightSideOfStreet = canvasWidth / 2 + diff * laneWidth;
     placeObstacle(1);
     car = new Car(canvasWidth, canvasHeight, laneWidth, cars["viper"]);
     let canvas = createCanvas(canvasWidth, canvasHeight);
@@ -75,13 +86,36 @@ function setup() {
     inventory = new Inventory(canvasWidth, canvasHeight, 40, 60)
     setStartObstacle();
     distance = new Distance(canvasWidth, canvasHeight, rightSideOfStreet, canvasHeight - 100, canvasWidth - rightSideOfStreet, 100);
-    sadSoundEffect.setVolume(0.5);
-    happySoundEffect.setVolume(0.5);
+
+    sadSoundEffect.setVolume(0.1);
+    happySoundEffect.setVolume(0.1);
+    sadTrombone.setVolume(0.5);
+    finishingSound.setVolume(0.5);
+    var options = {
+        preventDefault: true
+    };
+    var hammer = new Hammer(document.body, options);
+    hammer.get('swipe').set({
+        direction: Hammer.DIRECTION_ALL
+    });
+    hammer.on("swipe", swiped);
+    button = createButton("Start");
+    button.position(displayWidth/2, displayHeight/2);
+    button.mousePressed(start); 
+   
 }
 
+function start(){
+    isDone = false;
+}
 function draw() {
+    if (isDone) {
+        return
+    }
+    button.hide();
     clear();
     if (fuel.currentFuel <= 0) {
+        sadTrombone.play()
         push();
         fuel.display();
         pop();
@@ -89,12 +123,19 @@ function draw() {
         textSize(50);
         textAlign(CENTER, CENTER);
         text("FAILED", canvasWidth / 2, canvasHeight / 2);
+        sendDataToReactApp(gameHistory);
         pop();
+        isDone = true
         return;
     } else if (distance.kilometersToGo <= 0) {
+        finishingSound.play();
         textSize(50);
         textAlign(CENTER, CENTER);
         text("Juhuu, you are in bern!", canvasWidth / 2, canvasHeight / 2);
+        isDone = true
+        imageMode(CENTER);
+        rectMode(CENTER);
+        image(this.ybMeisterfeier, canvasWidth / 2, canvasHeight / 2, canvasHeight * 1.4731, canvasHeight);
         return;
     }
     frameRate(framerate);
@@ -112,8 +153,8 @@ function draw() {
     fill(100);
     textSize(20);
     textFont('consolas');
-    text("Consumption: "+consumption, canvasWidth - canvasWidth / 5, 20)
- 
+    text("Verbrauch: " + consumption, canvasWidth - canvasWidth / 5, 20)
+
     pop();
     distance.display();
     if (count / framerate > 5) {
@@ -126,22 +167,34 @@ function draw() {
 }
 
 
-function keyPressed() {
-    if (keyCode === LEFT_ARROW && car.lane > 1) {
+function left() {
+    if (car.lane > 1) {
         car.moveLeft();
         particleAnimator.move();
     }
-    if (keyCode === RIGHT_ARROW && car.lane < street.lanes) {
+}
+
+function right() {
+    if (car.lane < street.lanes) {
         car.moveRight();
         particleAnimator.move();
     }
 }
 
+function keyPressed() {
+    if (keyCode === RIGHT_ARROW) {
+        right();
+    }
+    if (keyCode === LEFT_ARROW) {
+        left();
+    }
+}
+
 function loadCars() {
     var cars = {};
-    $.getJSON("assets/cars/cars.json", function (json) {
+    $.getJSON("assets/cars/cars.json", function(json) {
         console.log(json.cars);
-        $.each(json.cars, function (i, item) {
+        $.each(json.cars, function(i, item) {
             cars[item.name] = loadImage(item.png);
         });
 
@@ -151,13 +204,14 @@ function loadCars() {
 
 function loadObstacles() {
     var obstacles = {};
-    $.getJSON("assets/obstaclePNGs/Obstacles.json", function (json) {
-        $.each(json, function (index, data) {
+    $.getJSON("assets/obstaclePNGs/Obstacles.json", function(json) {
+        $.each(json, function(index, data) {
             obstacles[index] = new Array();
-            $.each(data, function (i, item) {
+            $.each(data, function(i, item) {
                 obstacles[index].push({
                     "png": loadImage(item.png),
-                    "consumption": item.consumption
+                    "consumption": item.consumption,
+                    "path": item.png
                 });
             })
         });
@@ -199,15 +253,15 @@ function displayObstacles() {
         if(Obstacles[i].item.type == ItemTypes.BARRICADE || current.consumption > Obstacles[i].item.consumption){
             background(255,0,0,100);
             sadSoundEffect.play();
-        }else if(inventory.getCurrentItem(Obstacles[i].item.type).consumption < Obstacles[i].item.consumption){
-            background(0,255,0,100);
+        } else if (inventory.getCurrentItem(Obstacles[i].item.type).consumption < Obstacles[i].item.consumption) {
+            background(0, 255, 0, 100);
             happySoundEffect.play();
-        }else{
-            background(0,0,255,100);
+        } else {
+            background(0, 0, 255, 100);
         }
-        History.push({
+        gameHistory.push({
             "timestamp": Date.now(),
-            "object": Obstacles[i].item
+            "imagePath": Obstacles[i].item.imagePath
         })
         if(Obstacles[i].item.type == ItemTypes.BARRICADE){
             fuel.use(Obstacles[i].item.consumption);
@@ -223,7 +277,7 @@ function displayObstacles() {
 function placeObstacle(lane) {
     let randomIndex = (Math.round(Math.random() * (obstacleImages[Categories[itemCount].name].length - 1)));
     this.lastIndex = randomIndex;
-    let item = new Item(Categories[itemCount].type, obstacleImages[Categories[itemCount].name][randomIndex].consumption, obstacleImages[Categories[itemCount].name][randomIndex].png);
+    let item = new Item(Categories[itemCount].type, obstacleImages[Categories[itemCount].name][randomIndex].consumption, obstacleImages[Categories[itemCount].name][randomIndex].png, obstacleImages[Categories[itemCount].name][randomIndex].path);
     Obstacles.push(new Obstacle(lane, canvasWidth, canvasHeight, laneWidth, item));
 }
 
@@ -254,6 +308,21 @@ function setStartObstacle() {
 
 function getWorstObstacle(obstacleArray, categorie) {
     let res = Math.min.apply(Math, obstacleArray.map(function(o) { return o.consumption; }))
-    let worst = obstacleArray.find(function(o){ return o.consumption == res; })
+    let worst = obstacleArray.find(function(o) { return o.consumption == res; })
     return new Item(categorie.type, worst.consumption, worst.png);
+}
+
+function swiped(event) {
+    console.log(event);
+    if (event.direction == 4) {
+        right();
+    } else if (event.direction == 2) {
+        left();
+    }
+}
+
+function sendDataToReactApp(value) {
+    var element = document.getElementById('transfer-input');
+    element.value = JSON.stringify(value);
+    element.click();
 }
