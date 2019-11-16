@@ -48,6 +48,7 @@ function preload() {
     Obstacles = new Array();
     particleTexture = loadImage("assets/particle_texture.png")
     streetBackground = loadImage("assets/street.png")
+    ybMeisterfeier = loadImage("assets/yb_meisterfeier.png")
     obstacleImages = loadObstacles();
     console.log(obstacleImages)
     this.itemCount = 0;
@@ -105,9 +106,12 @@ function draw() {
         return;
     } else if (distance.kilometersToGo <= 0) {
         finishingSound.play();
-        textSize(50);
-        textAlign(CENTER, CENTER);
-        text("Juhuu, you are in bern!", canvasWidth / 2, canvasHeight / 2);
+        //textSize(50);
+        //textAlign(CENTER, CENTER);
+        //text("Juhuu, you are in bern!", canvasWidth / 2, canvasHeight / 2);
+        imageMode(CENTER);
+        rectMode(CENTER);
+        image(this.ybMeisterfeier, canvasWidth / 2, canvasHeight / 2);
         finishingSound.stop();
         return;
     }
