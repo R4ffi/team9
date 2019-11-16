@@ -108,7 +108,7 @@ function draw() {
     }
     button.hide();
     clear();
-    if (fuel.currentFuel > 0) {
+    if (fuel.currentFuel <= 0) {
         sadTrombone.play()
         push();
         fuel.display();
